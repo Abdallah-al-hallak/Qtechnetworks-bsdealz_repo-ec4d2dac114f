@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "289837798399",
+    "project_id": "bsdealz-4b71c",
+    "storage_bucket": "bsdealz-4b71c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289837798399:android:40f909c4f6ab37ba680dca",
+        "android_client_info": {
+          "package_name": "com.qtechnetworks.bsdealz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "289837798399-7kbernr052iv8pbgknascognu6uosnf5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qtechnetworks.bsdealz",
+            "certificate_hash": "112e048cb396daa9baa365d2d6da00c57f3ea914"
+          }
+        },
+        {
+          "client_id": "289837798399-g2uvr92jvjceu9gabc4ufcns1rsgeg4t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrBB4cIrZpmUPhowIn0TVo5CHilJ2J2PQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "289837798399-g2uvr92jvjceu9gabc4ufcns1rsgeg4t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "289837798399-c92ordrorri3bpn7nr05uqu01uhsai04.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.qtechnetworks.bsdealz.bsdealz"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

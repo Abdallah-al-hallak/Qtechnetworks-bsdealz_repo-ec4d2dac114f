@@ -205,7 +205,7 @@ class CampaignItemSingleState extends State<CampaignItemSingle> {
     bool isLiked = false;
 
     if (RefreshApp.of(context)!.isLogin) {
-      RefreshApp.of(context)!.apiAppVariables.wishList!.forEach((element) {
+      RefreshApp.of(context)!.apiAppVariables.wishList?.forEach((element) {
         if (element.campaignId == widget.mycampagin.id) {
           isLiked = true;
         }
@@ -414,7 +414,7 @@ class CampaignItemSingleState extends State<CampaignItemSingle> {
                 Container(
                   height: 1,
                   color: Colors.grey[400],
-                  margin: EdgeInsets.only(top: 5, bottom: 15),
+                  margin: const EdgeInsets.only(top: 5, bottom: 15),
                   alignment: Alignment.bottomCenter,
                 ),
                 Container(
@@ -429,7 +429,7 @@ class CampaignItemSingleState extends State<CampaignItemSingle> {
                         earlyBirdWidget,
                         Container(
                             height: 50,
-                            margin: EdgeInsets.only(
+                            margin: const EdgeInsets.only(
                                 top: 5, bottom: 5, left: 30, right: 10),
                             alignment: Alignment.centerLeft,
                             child: Row(

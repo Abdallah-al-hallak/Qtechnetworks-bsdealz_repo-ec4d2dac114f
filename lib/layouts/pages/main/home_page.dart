@@ -30,10 +30,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Widget> _widgetOptions = [
-    Center(),
-    Center(),
-    Center(),
-    Center(),
+    const Center(),
+    const Center(),
+    const Center(),
+    const Center(),
   ];
 
   _HomePageState();
@@ -204,7 +204,7 @@ class _HomePageState extends State<HomePage> {
     print("-------Reloading View home");
     if (false) {
       EasyLoading.show(status: "loading");
-      return Center(child: Text("Loading"));
+      return const Center(child: Text("Loading"));
     } else {
       //  EasyLoading.dismiss();
 
@@ -231,34 +231,36 @@ class _HomePageState extends State<HomePage> {
       Widget couponsIcon = AppIcon(icon: AppIcon.COUPON_PATH, size: 22);
       if (!RefreshApp.of(context)!.isNotificationSeen) {
         notificationsIcon = b.Badge(
-            badgeContent: Text(
+            badgeContent: const Text(
               ' ',
               style: TextStyle(
                   color: Colors.red, fontSize: 6, fontWeight: FontWeight.bold),
             ),
             borderRadius: BorderRadius.circular(20),
             shape: b.BadgeShape.circle,
-            padding: EdgeInsets.all(3),
+            padding: const EdgeInsets.all(3),
             position: b.BadgePosition.topEnd(top: 0, end: 15),
             badgeColor: Colors.red,
             elevation: 2,
             child: Container(
-              padding: EdgeInsets.only(top: 10, left: 10),
+              padding: const EdgeInsets.only(top: 10, left: 10),
               child: AppIcon(icon: AppIcon.NOTIFICATION_PATH, size: 22),
             ));
       }
       if (RefreshApp.of(context)!.apiAppVariables.userCoupons !=
+          // ignore: curly_braces_in_flow_control_structures
           null) if (RefreshApp.of(
               context)!
           .apiAppVariables
           .userCoupons!
           .isNotEmpty) {
-        RefreshApp.of(context)!.apiAppVariables.userCoupons!.forEach((element) {
+        for (var element
+            in RefreshApp.of(context)!.apiAppVariables.userCoupons!) {
           if (element.campaign!.status != "Not active") {
             couponsIcon = b.Badge(
                 badgeContent: const Text(
                   ' ',
-                  style: const TextStyle(
+                  style: TextStyle(
                       color: Colors.red,
                       fontSize: 6,
                       fontWeight: FontWeight.bold),
@@ -270,11 +272,11 @@ class _HomePageState extends State<HomePage> {
                 badgeColor: Colors.red,
                 elevation: 2,
                 child: Container(
-                  padding: EdgeInsets.only(top: 10, left: 10),
+                  padding: const EdgeInsets.only(top: 10, left: 10),
                   child: AppIcon(icon: AppIcon.COUPON_PATH, size: 22),
                 ));
           }
-        });
+        }
       }
       return Scaffold(
         // drawer: CustomDrawer(),

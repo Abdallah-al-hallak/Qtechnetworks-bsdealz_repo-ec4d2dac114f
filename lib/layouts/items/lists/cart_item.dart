@@ -99,7 +99,6 @@ class CartItemSingleState extends State<CartItemSingle> {
   int quantity = 1;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     quantity = widget.cartItem.quantity!;
   }
@@ -166,7 +165,7 @@ class CartItemSingleState extends State<CartItemSingle> {
                       // shadowColor: Colors.black,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Container(
+                        child: SizedBox(
                           width: 100,
                           height: 100,
                           child: InkWell(
@@ -222,7 +221,7 @@ class CartItemSingleState extends State<CartItemSingle> {
                           height: 2,
                         ),
                         BaseText(
-                          color: Color(0XFF707070),
+                          color: const Color(0XFF707070),
                           text: widget
                               .cartItem.campaign!.products!.first.productName
                               .toString(),
@@ -242,7 +241,7 @@ class CartItemSingleState extends State<CartItemSingle> {
                               width: 15,
                             ),
                             BaseText(
-                              color: Color(0XFF707070),
+                              color: const Color(0XFF707070),
                               text: "${AppSettingTheme.getTheme(
                                 context,
                                 Config.PRICE_KEY,
@@ -256,7 +255,7 @@ class CartItemSingleState extends State<CartItemSingle> {
                               clickable: false,
                             ),
                             BaseText(
-                              color: Color(0XFF707070),
+                              color: const Color(0XFF707070),
                               text:
                                   " ${RefreshApp.of(context)!.apiHeaders.acceptCurrency}${widget.cartItem.campaign!.price.toString().replaceAll(RegExp(r'([.]*0+)(?!.*\d)'), '')}",
                               margin: 2,
@@ -269,13 +268,14 @@ class CartItemSingleState extends State<CartItemSingle> {
                           ],
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: 10, right: 10, top: 15),
+                          margin: const EdgeInsets.only(
+                              left: 10, right: 10, top: 15),
                           height: 35,
                           child: Card(
                             shape: shapeBorder1,
                             child: Container(
                               width: 85,
-                              margin: EdgeInsets.only(left: 3, right: 3),
+                              margin: const EdgeInsets.only(left: 3, right: 3),
                               alignment: Alignment.center,
                               child: Row(
                                 children: [
@@ -344,20 +344,21 @@ class CartItemSingleState extends State<CartItemSingle> {
               ),
               Container(
                 height: 1,
-                color: Color(0XFFD6D3D3),
-                margin: EdgeInsets.only(top: 15, bottom: 0),
+                color: const Color(0XFFD6D3D3),
+                margin: const EdgeInsets.only(top: 15, bottom: 0),
                 alignment: Alignment.bottomCenter,
               ),
             ],
           ),
           Container(
             alignment: Alignment.bottomRight,
-            margin: EdgeInsets.only(top: 0, bottom: 0, left: 20, right: 20),
+            margin:
+                const EdgeInsets.only(top: 0, bottom: 0, left: 20, right: 20),
             child: Row(
               children: [
                 Expanded(
                   child: Container(
-                      margin: EdgeInsets.only(bottom: 15),
+                      margin: const EdgeInsets.only(bottom: 15),
                       alignment: AlignmentDirectional.bottomEnd,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -409,7 +410,7 @@ class CartItemSingleState extends State<CartItemSingle> {
                   child: Container(
                       width: 35,
                       height: 35,
-                      margin: EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(10),
                       alignment: AlignmentDirectional.topEnd,
                       child: AppIcon(
                         icon: AppIcon.CLOSE_PATH,
@@ -464,19 +465,19 @@ class CartItemSingleState extends State<CartItemSingle> {
 
     double subtotal = 0.0;
     double total = 0.0;
-    RefreshApp.of(context)!.apiAppVariables!.cart!.subtotal = 0.00;
-    RefreshApp.of(context)!.apiAppVariables!.cart!.total = 0.00;
-    RefreshApp.of(context)!.apiAppVariables!.cart!.items!.forEach((element) {
+    RefreshApp.of(context)!.apiAppVariables.cart!.subtotal = 0.00;
+    RefreshApp.of(context)!.apiAppVariables.cart!.total = 0.00;
+    RefreshApp.of(context)!.apiAppVariables.cart!.items!.forEach((element) {
       subtotal = subtotal +
           double.parse(element.campaign!.price!) *
               double.parse(element.quantity.toString());
     });
 
     // RefreshApp.of(context)!.apiAppVariables!.cart!.total=RefreshApp.of(context)!.apiAppVariables!.cart!.subtotal;
-    RefreshApp.of(context)!.apiAppVariables!.cart!.subtotal =
+    RefreshApp.of(context)!.apiAppVariables.cart!.subtotal =
         RefreshApp.of(context)!.apiHeaders.acceptCurrency.toString() +
             subtotal.toString();
-    RefreshApp.of(context)!.apiAppVariables!.cart!.total =
+    RefreshApp.of(context)!.apiAppVariables.cart!.total =
         RefreshApp.of(context)!.apiHeaders.acceptCurrency.toString() +
             subtotal.toString();
     // RefreshApp.of(context)!.CartTotal = RefreshApp.of(context)!.CartSubTotal;
@@ -484,7 +485,7 @@ class CartItemSingleState extends State<CartItemSingle> {
     setState(() {
       RefreshApp.of(context)!.activeCampaignWidgets.clear();
       RefreshApp.of(context)!
-          .apiAppVariables!
+          .apiAppVariables
           .activeCampaigns!
           .forEach((element) {
         if (kIsWeb) {
@@ -525,12 +526,12 @@ class CartItemSingleState extends State<CartItemSingle> {
               .apiAppVariables
               .cart!
               .items!
-              .elementAt(i)!
+              .elementAt(i)
               .quantity = RefreshApp.of(context)!
                   .apiAppVariables
                   .cart!
                   .items!
-                  .elementAt(j)!
+                  .elementAt(j)
                   .quantity! +
               1;
         } else {
@@ -543,7 +544,7 @@ class CartItemSingleState extends State<CartItemSingle> {
                   .apiAppVariables
                   .cart!
                   .items!
-                  .elementAt(j)!
+                  .elementAt(j)
                   .quantity! -
               1;
         }
@@ -551,7 +552,7 @@ class CartItemSingleState extends State<CartItemSingle> {
             .apiAppVariables
             .cart!
             .items!
-            .elementAt(j)!
+            .elementAt(j)
             .quantity!;
         if (RefreshApp.of(context)!
                 .apiAppVariables
@@ -570,26 +571,26 @@ class CartItemSingleState extends State<CartItemSingle> {
     }
     double subtotal = 0.0;
     double total = 0.0;
-    RefreshApp.of(context)!.apiAppVariables!.cart!.subtotal = 0.00;
-    RefreshApp.of(context)!.apiAppVariables!.cart!.total = 0.00;
-    RefreshApp.of(context)!.apiAppVariables!.cart!.items!.forEach((element) {
+    RefreshApp.of(context)!.apiAppVariables.cart!.subtotal = 0.00;
+    RefreshApp.of(context)!.apiAppVariables.cart!.total = 0.00;
+    RefreshApp.of(context)!.apiAppVariables.cart!.items!.forEach((element) {
       subtotal = subtotal +
           double.parse(element.campaign!.price!) *
               double.parse(element.quantity.toString());
     });
 
     // RefreshApp.of(context)!.apiAppVariables!.cart!.total=RefreshApp.of(context)!.apiAppVariables!.cart!.subtotal;
-    RefreshApp.of(context)!.apiAppVariables!.cart!.subtotal =
+    RefreshApp.of(context)!.apiAppVariables.cart!.subtotal =
         RefreshApp.of(context)!.apiHeaders.acceptCurrency.toString() +
             subtotal.toString();
-    RefreshApp.of(context)!.apiAppVariables!.cart!.total =
+    RefreshApp.of(context)!.apiAppVariables.cart!.total =
         RefreshApp.of(context)!.apiHeaders.acceptCurrency.toString() +
             subtotal.toString();
 
     setState(() {
       RefreshApp.of(context)!.activeCampaignWidgets.clear();
       RefreshApp.of(context)!
-          .apiAppVariables!
+          .apiAppVariables
           .activeCampaigns!
           .forEach((element) {
         if (kIsWeb) {

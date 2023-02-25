@@ -11,14 +11,15 @@ import 'package:bsdealz/network/models/APICartItem.dart';
 
 class ApiCart {
   ApiCart({
-    List<ApiCartItem>? items,
-    dynamic? levelDiscount,
-    dynamic? promoCodeDiscount,
-    dynamic? tax,
-    dynamic? total,
-    dynamic? pointsDiscount,
+    List<ApiCartItem>? items = const [],
+    dynamic levelDiscount,
+    dynamic promoCodeDiscount,
+    dynamic tax,
+    dynamic total,
+    dynamic pointsDiscount,
     int? pointsToSubtract,
-    dynamic? subtotal,}){
+    dynamic? subtotal,
+  }) {
     _items = items;
     _levelDiscount = levelDiscount;
     _promoCodeDiscount = promoCodeDiscount;
@@ -44,31 +45,34 @@ class ApiCart {
     _pointsToSubtract = json['points_to_subtract'];
     _subtotal = json['subtotal'];
   }
-  List<ApiCartItem>? _items;
-  dynamic? _levelDiscount;
-  dynamic? _promoCodeDiscount;
-  dynamic? _tax;
-  dynamic? _total;
-  dynamic? _pointsDiscount;
+  List<ApiCartItem>? _items = [];
+  dynamic _levelDiscount;
+  dynamic _promoCodeDiscount;
+  dynamic _tax;
+  dynamic _total;
+  dynamic _pointsDiscount;
   int? _pointsToSubtract;
-  dynamic? _subtotal;
-  ApiCart copyWith({  List<ApiCartItem>? items,
-    dynamic? levelDiscount,
-    dynamic? promoCodeDiscount,
-    dynamic? tax,
-    dynamic? total,
-    dynamic? pointsDiscount,
+  dynamic _subtotal;
+  ApiCart copyWith({
+    List<ApiCartItem>? items,
+    dynamic levelDiscount,
+    dynamic promoCodeDiscount,
+    dynamic tax,
+    dynamic total,
+    dynamic pointsDiscount,
     int? pointsToSubtract,
     dynamic? subtotal,
-  }) => ApiCart(  items: items ?? _items,
-    levelDiscount: levelDiscount ?? _levelDiscount,
-    promoCodeDiscount: promoCodeDiscount ?? _promoCodeDiscount,
-    tax: tax ?? _tax,
-    total: total ?? _total,
-    pointsDiscount: pointsDiscount ?? _pointsDiscount,
-    pointsToSubtract: pointsToSubtract ?? _pointsToSubtract,
-    subtotal: subtotal ?? _subtotal,
-  );
+  }) =>
+      ApiCart(
+        items: items ?? _items,
+        levelDiscount: levelDiscount ?? _levelDiscount,
+        promoCodeDiscount: promoCodeDiscount ?? _promoCodeDiscount,
+        tax: tax ?? _tax,
+        total: total ?? _total,
+        pointsDiscount: pointsDiscount ?? _pointsDiscount,
+        pointsToSubtract: pointsToSubtract ?? _pointsToSubtract,
+        subtotal: subtotal ?? _subtotal,
+      );
   List<ApiCartItem>? get items => _items;
   dynamic? get levelDiscount => _levelDiscount;
   dynamic? get promoCodeDiscount => _promoCodeDiscount;

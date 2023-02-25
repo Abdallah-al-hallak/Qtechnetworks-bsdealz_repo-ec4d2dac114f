@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import '../../../../utils/Config.dart';
 import '../../../../utils/GetSettingByKey.dart';
 
+import '../../../../utils/shared_func.dart';
 import '../../../dialogs/web_dialog.dart';
 import '../../../pages/credentials/login.dart';
 import '../../../pages/main/ContactUsPage.dart';
@@ -151,10 +152,15 @@ class CustomHeaderItemState extends State<CustomHeaderItem> {
               ),
               clickable: true,
               onPressed: () {
+                SharedFunc().setToken('token', '');
                 CustomSharedPrefs().clear();
                 RefreshApp.of(context)!.apiHeaders.token = null;
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Splash()));
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Login(
+                              destination: '2',
+                            )));
                 // WebDialog.showMyDialog(WebDialog(title: "",text: "Dismiss",
                 //   descriptions: "",customWidget: Splash(),),context);
               },

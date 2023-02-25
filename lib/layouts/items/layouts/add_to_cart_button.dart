@@ -5,10 +5,14 @@ import 'package:bsdealz/layouts/pages/main/cart_page.dart';
 import 'package:bsdealz/network/models/APICampaign.dart';
 import 'package:bsdealz/utils/inherited/refresh_app_state.dart';
 import 'package:bsdealz/utils/sharedprefs.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../../../main.dart';
+import '../../../network/HttpAPI.dart';
+import '../../../network/models/APICart.dart';
 import '../../../network/models/APICartItem.dart';
 import '../../../utils/Config.dart';
 import '../../../utils/GetSettingByKey.dart';
@@ -56,77 +60,80 @@ class _AddToCartButtonState extends State<AddToCartButton> {
       }
     });
 
-    Widget addToCartWidget = Container(
-      margin: EdgeInsets.only(top: 20, bottom: 5),
-      alignment: Alignment.bottomCenter,
-      child: MiniButton(
-          text: "${AppSettingTheme.getTheme(
-            context,
-            Config.ADD_TO_CART_KEY,
-            Config.ADD_TO_CART_VALUE,
-          )}",
-          onPressed: () {
-            if (RefreshApp.of(context)!.isLogin) {
-              if (widget.campaign.quantity! - widget.campaign.sold! >= 1 &&
-                  widget.campaign.status == "active") {
-                // addToCart();
-                quantity = 1;
-                addToCartLocally(true);
-              } else {
-                MainDialog.showMyDialog(
-                    MainDialog(
-                      title: "Failed to add",
-                      text: "can't add more, not active campaign",
-                      descriptions: "can't add more, not active campaign",
-                      type: DialogType.ERROR,
-                      customWidget: Container(),
-                    ),
-                    context);
-              }
-            } else {
-              MainDialog.showMyDialog(
-                  MainDialog(
-                    title: "${AppSettingTheme.getTheme(
-                      context,
-                      Config.FAILED_KEY,
-                      Config.FAILED_VALUE,
-                    )}",
-                    text: "${AppSettingTheme.getTheme(
-                      context,
-                      Config.DISMISS_KEY,
-                      Config.DISMISS_VALUE,
-                    )}",
-                    descriptions: "${AppSettingTheme.getTheme(
-                      context,
-                      Config.PLEASE_LOGIN_KEY,
-                      Config.PLEASE_LOGIN_VALUE,
-                    )}",
-                    type: DialogType.ERROR,
-                    customWidget: Button1(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Login(
-                                        destination: '1',
-                                      )));
-                        },
-                        text: "${AppSettingTheme.getTheme(
-                          context,
-                          Config.LOGIN_KEY,
-                          Config.LOGIN_VALUE,
-                        )}",
-                        hasIcon: false,
-                        color: Colors.red,
-                        fontColor: Colors.white),
-                  ),
-                  context);
-            }
-          },
-          isActive: true),
-    );
+    Widget addToCartWidget = RefreshApp.of(context)!.localCart.items != 0
+        ? Container(
+            margin: const EdgeInsets.only(top: 20, bottom: 5),
+            alignment: Alignment.bottomCenter,
+            child: MiniButton(
+                text: AppSettingTheme.getTheme(
+                  context,
+                  Config.ADD_TO_CART_KEY,
+                  Config.ADD_TO_CART_VALUE,
+                ),
+                onPressed: () {
+                  if (RefreshApp.of(context)!.isLogin) {
+                    if (widget.campaign.quantity! - widget.campaign.sold! >=
+                            1 &&
+                        widget.campaign.status == "active") {
+                      // addToCart();
+                      quantity = 1;
+                      addToCartLocally(true);
+                    } else {
+                      MainDialog.showMyDialog(
+                          MainDialog(
+                            title: "Failed to add",
+                            text: "can't add more, not active campaign",
+                            descriptions: "can't add more, not active campaign",
+                            type: DialogType.ERROR,
+                            customWidget: Container(),
+                          ),
+                          context);
+                    }
+                  } else {
+                    MainDialog.showMyDialog(
+                        MainDialog(
+                          title: AppSettingTheme.getTheme(
+                            context,
+                            Config.FAILED_KEY,
+                            Config.FAILED_VALUE,
+                          ),
+                          text: AppSettingTheme.getTheme(
+                            context,
+                            Config.DISMISS_KEY,
+                            Config.DISMISS_VALUE,
+                          ),
+                          descriptions: "${AppSettingTheme.getTheme(
+                            context,
+                            Config.PLEASE_LOGIN_KEY,
+                            Config.PLEASE_LOGIN_VALUE,
+                          )}",
+                          type: DialogType.ERROR,
+                          customWidget: Button1(
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Login(
+                                              destination: '1',
+                                            )));
+                              },
+                              text: "${AppSettingTheme.getTheme(
+                                context,
+                                Config.LOGIN_KEY,
+                                Config.LOGIN_VALUE,
+                              )}",
+                              hasIcon: false,
+                              color: Colors.red,
+                              fontColor: Colors.white),
+                        ),
+                        context);
+                  }
+                },
+                isActive: true),
+          )
+        : Text('');
     ShapeBorder shapeBorder1 = RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(9)),
+        borderRadius: const BorderRadius.all(Radius.circular(9)),
         side: BorderSide(width: 1, color: Colors.grey[300]!));
     if (RefreshApp.of(context)!.localCart != null) {
       if (RefreshApp.of(context)!.localCart.items!.isNotEmpty) {
@@ -141,17 +148,17 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                   .id ==
               widget.campaign.id) {
             addToCartWidget = Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
+              margin: const EdgeInsets.only(left: 20, right: 20),
               height: 60,
               child: Card(
                 shape: shapeBorder1,
                 child: Container(
                   width: MediaQuery.of(context).size.width - 20,
-                  margin: EdgeInsets.only(left: 5, right: 5),
+                  margin: const EdgeInsets.only(left: 5, right: 5),
                   alignment: Alignment.center,
                   child: Row(
                     children: [
-                      Container(
+                      SizedBox(
                           width: 50,
                           child: BaseButton(
                             isfilled: true,
@@ -175,6 +182,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                             ovalpadding: 4,
                             onPressed: () {
                               quantity = quantity - 1;
+                              updateLocally1(false);
                               updateLocally(false);
                             },
                             width: 50,
@@ -229,6 +237,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                   widget.campaign.sold! >
                               quantity) {
                             quantity = quantity + 1;
+                            updateLocally1(true);
                             updateLocally(true);
                           } else {
                             MainDialog.showMyDialog(
@@ -255,7 +264,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                         )),
                       ),
                       Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
                         child: AddMoreBtn(
                           isActive: true,
                           onPressed: () {
@@ -293,9 +302,9 @@ class _AddToCartButtonState extends State<AddToCartButton> {
             i++) {
           if (RefreshApp.of(context)!
                   .apiAppVariables
-                  .cart!
-                  .items!
-                  .elementAt(i)
+                  .cart
+                  ?.items
+                  ?.elementAt(i)
                   .campaignId ==
               widget.campaign.id) {
             isGlobal = true;
@@ -310,7 +319,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
             quantity: 1,
             campaign: widget.campaign);
         if (!isGlobal) {
-          RefreshApp.of(context)!.apiAppVariables.cart!.items!.add(cartItem);
+          RefreshApp.of(context)!.apiAppVariables.cart?.items?.add(cartItem);
         } else {
           RefreshApp.of(context)!
               .apiAppVariables
@@ -330,23 +339,160 @@ class _AddToCartButtonState extends State<AddToCartButton> {
         double subtotal = 0.0;
         double total = 0.0;
 
-        RefreshApp.of(context)!.apiAppVariables.cart!.items!.forEach((element) {
+        RefreshApp.of(context)!.apiAppVariables.cart?.items!.forEach((element) {
           subtotal = subtotal +
               double.parse(element.campaign!.price!) *
                   double.parse(element.quantity.toString());
         });
 
         // RefreshApp.of(context)!.apiAppVariables!.cart!.total=RefreshApp.of(context)!.apiAppVariables!.cart!.subtotal;
-        RefreshApp.of(context)!.apiAppVariables.cart!.subtotal =
+        RefreshApp.of(context)!.apiAppVariables.cart?.subtotal =
             RefreshApp.of(context)!.apiHeaders.acceptCurrency.toString() +
                 subtotal.toString();
-        RefreshApp.of(context)!.apiAppVariables.cart!.total =
+        RefreshApp.of(context)!.apiAppVariables.cart?.total =
             RefreshApp.of(context)!.apiHeaders.acceptCurrency.toString() +
                 subtotal.toString();
         MyApp.refreshApp(context);
       }
     });
   }
+  //!
+  //here buuton
+
+  Future<void> updateLocally1(bool increase) async {
+    int j = 0;
+
+    for (int i = 0;
+        i < RefreshApp.of(context)!.apiAppVariables.cart!.items!.length;
+        i++) {
+      if (RefreshApp.of(context)!
+              .apiAppVariables
+              .cart!
+              .items!
+              .elementAt(i)
+              .campaignId ==
+          widget.campaign.id) {
+        j = i;
+        if (increase) {
+          RefreshApp.of(context)!
+              .apiAppVariables
+              .cart!
+              .items!
+              .elementAt(i)
+              .quantity = RefreshApp.of(context)!
+                  .apiAppVariables
+                  .cart!
+                  .items!
+                  .elementAt(j)
+                  .quantity! +
+              1;
+        } else {
+          RefreshApp.of(context)!
+              .apiAppVariables
+              .cart!
+              .items!
+              .elementAt(i)
+              .quantity = RefreshApp.of(context)!
+                  .apiAppVariables
+                  .cart!
+                  .items!
+                  .elementAt(j)
+                  .quantity! -
+              1;
+        }
+        quantity = RefreshApp.of(context)!
+            .apiAppVariables
+            .cart!
+            .items!
+            .elementAt(j)
+            .quantity!;
+        if (RefreshApp.of(context)!
+                .apiAppVariables
+                .cart!
+                .items!
+                .elementAt(j)
+                .quantity ==
+            0) {
+          //   RefreshApp.of(context)!.apiAppVariables.cart!.items!.removeAt(j);
+          // removeLocally();
+        }
+        updateCart();
+      }
+
+      //  RefreshApp.of(context)!.CartSubTotal = double.parse(RefreshApp.of(context)!.apiAppVariables.cart.items!.elementAt(i).campaign!.price!) * double.parse(RefreshApp.of(context)!.localCart!.items!.elementAt(i)!.quantity.toString());
+    }
+    double subtotal = 0.0;
+    double total = 0.0;
+    RefreshApp.of(context)!.apiAppVariables.cart!.subtotal = 0.00;
+    RefreshApp.of(context)!.apiAppVariables.cart!.total = 0.00;
+    RefreshApp.of(context)!.apiAppVariables.cart!.items!.forEach((element) {
+      subtotal = subtotal +
+          double.parse(element.campaign!.price!) *
+              double.parse(element.quantity.toString());
+    });
+
+    // RefreshApp.of(context)!.apiAppVariables!.cart!.total=RefreshApp.of(context)!.apiAppVariables!.cart!.subtotal;
+    RefreshApp.of(context)!.apiAppVariables.cart!.subtotal =
+        RefreshApp.of(context)!.apiHeaders.acceptCurrency.toString() +
+            subtotal.toString();
+    RefreshApp.of(context)!.apiAppVariables.cart!.total =
+        RefreshApp.of(context)!.apiHeaders.acceptCurrency.toString() +
+            subtotal.toString();
+
+    setState(() {
+      RefreshApp.of(context)!.activeCampaignWidgets.clear();
+      RefreshApp.of(context)!
+          .apiAppVariables
+          .activeCampaigns!
+          .forEach((element) {
+        if (kIsWeb) {
+          RefreshApp.of(context)!.activeCampaignWidgets.add(CampaignItemWeb(
+                mycampagin: element,
+                height: 350,
+                width: 1,
+              ));
+        } else {
+          RefreshApp.of(context)!.activeCampaignWidgets.add(CampaignItem(
+                mycampagin: element,
+                height: 555,
+                width: 1,
+              ));
+        }
+      });
+    });
+
+    MyApp.refreshApp(context);
+  }
+
+  //!
+  //cart
+  updateCart() {
+    print("hi all");
+    HttpAPI http = HttpAPI();
+    Dio dio = http.Inisalize(context);
+    EasyLoading.show();
+
+    Map<String, dynamic> data = {
+      "use_points": CartPage.usePoints,
+      "promo_code":
+          RefreshApp.of(context)!.promoCode.controller.text.toString(),
+      "id": widget.campaign.id,
+      "quantity": widget.campaign.quantity,
+    };
+    return dio.post('updatecart', data: data).then((value) {
+      if (value.data['status'] == 'success') {
+        ApiCart cart = ApiCart.fromJson(value.data['data']);
+        // applyPromoCode();
+        RefreshApp.of(context)!.apiAppVariables.cart = cart;
+        MyApp.refreshApp(context);
+      }
+
+      EasyLoading.dismiss();
+    }).onError((error, stackTrace) {
+      EasyLoading.dismiss();
+    });
+  }
+  //
 
   updateLocally(bool increase) {
     int m = -1;
@@ -413,7 +559,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
       //     .of(context)!
       //     .apiAppVariables
       //     .cart!
-      //     .items!
+      //     .items!boku
       //     .elementAt(j)!
       //     .quantity =   RefreshApp
       //     .of(context)!

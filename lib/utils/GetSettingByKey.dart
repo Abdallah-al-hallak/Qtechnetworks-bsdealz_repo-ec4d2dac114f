@@ -1,26 +1,50 @@
 import 'package:bsdealz/utils/inherited/refresh_app_state.dart';
 import 'package:flutter/cupertino.dart';
-class AppSettingTheme{
 
-static String getSetting(BuildContext context,String key,String defaultValue){
-  for(int i=0;i<RefreshApp.of(context)!.apiAppVariables!.setting!.length;i++){
-    if(key==RefreshApp.of(context)!.apiAppVariables!.setting!.elementAt(i).name.toString()){
-      return RefreshApp.of(context)!.apiAppVariables!.setting!.elementAt(i).svalue.toString();
+class AppSettingTheme {
+  static String getSetting(
+      BuildContext context, String key, String defaultValue) {
+    for (int i = 0; i < 2; i++) {
+      if (key ==
+          RefreshApp.of(context)!
+              .apiAppVariables
+              .setting
+              ?.elementAt(i)
+              .name
+              .toString()) {
+        return RefreshApp.of(context)!
+            .apiAppVariables
+            .setting!
+            .elementAt(i)
+            .svalue
+            .toString();
+      }
     }
+    return defaultValue;
   }
-  return defaultValue;
-}
-static String getTheme(BuildContext context,String key,String defaultValue){
-  for(int i=0;i<RefreshApp.of(context)!.apiAppVariables!.theme!.length;i++){
-    if(key==RefreshApp.of(context)!.apiAppVariables!.theme!.elementAt(i).name.toString()){
-      return RefreshApp.of(context)!.apiAppVariables!.theme!.elementAt(i).value.toString();
+
+  static String getTheme(
+      BuildContext context, String key, String defaultValue) {
+    for (int i = 0; i < 2; i++) {
+      if (key ==
+          RefreshApp.of(context)!
+              .apiAppVariables
+              .theme
+              ?.elementAt(i)
+              .name
+              .toString()) {
+        return RefreshApp.of(context)!
+            .apiAppVariables
+            .theme!
+            .elementAt(i)
+            .value
+            .toString();
+      }
     }
+    return defaultValue;
   }
-  return defaultValue;
 }
 
-
-}
 class HexColor extends Color {
   static int _getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");

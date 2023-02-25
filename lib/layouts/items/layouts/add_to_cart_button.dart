@@ -60,78 +60,75 @@ class _AddToCartButtonState extends State<AddToCartButton> {
       }
     });
 
-    Widget addToCartWidget = RefreshApp.of(context)!.localCart.items != 0
-        ? Container(
-            margin: const EdgeInsets.only(top: 20, bottom: 5),
-            alignment: Alignment.bottomCenter,
-            child: MiniButton(
-                text: AppSettingTheme.getTheme(
-                  context,
-                  Config.ADD_TO_CART_KEY,
-                  Config.ADD_TO_CART_VALUE,
-                ),
-                onPressed: () {
-                  if (RefreshApp.of(context)!.isLogin) {
-                    if (widget.campaign.quantity! - widget.campaign.sold! >=
-                            1 &&
-                        widget.campaign.status == "active") {
-                      // addToCart();
-                      quantity = 1;
-                      addToCartLocally(true);
-                    } else {
-                      MainDialog.showMyDialog(
-                          MainDialog(
-                            title: "Failed to add",
-                            text: "can't add more, not active campaign",
-                            descriptions: "can't add more, not active campaign",
-                            type: DialogType.ERROR,
-                            customWidget: Container(),
-                          ),
-                          context);
-                    }
-                  } else {
-                    MainDialog.showMyDialog(
-                        MainDialog(
-                          title: AppSettingTheme.getTheme(
-                            context,
-                            Config.FAILED_KEY,
-                            Config.FAILED_VALUE,
-                          ),
-                          text: AppSettingTheme.getTheme(
-                            context,
-                            Config.DISMISS_KEY,
-                            Config.DISMISS_VALUE,
-                          ),
-                          descriptions: "${AppSettingTheme.getTheme(
-                            context,
-                            Config.PLEASE_LOGIN_KEY,
-                            Config.PLEASE_LOGIN_VALUE,
-                          )}",
-                          type: DialogType.ERROR,
-                          customWidget: Button1(
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Login(
-                                              destination: '1',
-                                            )));
-                              },
-                              text: "${AppSettingTheme.getTheme(
-                                context,
-                                Config.LOGIN_KEY,
-                                Config.LOGIN_VALUE,
-                              )}",
-                              hasIcon: false,
-                              color: Colors.red,
-                              fontColor: Colors.white),
-                        ),
-                        context);
-                  }
-                },
-                isActive: true),
-          )
-        : Text('');
+    Widget addToCartWidget = Container(
+      margin: const EdgeInsets.only(top: 20, bottom: 5),
+      alignment: Alignment.bottomCenter,
+      child: MiniButton(
+          text: AppSettingTheme.getTheme(
+            context,
+            Config.ADD_TO_CART_KEY,
+            Config.ADD_TO_CART_VALUE,
+          ),
+          onPressed: () {
+            if (RefreshApp.of(context)!.isLogin) {
+              if (widget.campaign.quantity! - widget.campaign.sold! >= 1 &&
+                  widget.campaign.status == "active") {
+                // addToCart();
+                quantity = 1;
+                addToCartLocally(true);
+              } else {
+                MainDialog.showMyDialog(
+                    MainDialog(
+                      title: "Failed to add",
+                      text: "can't add more, not active campaign",
+                      descriptions: "can't add more, not active campaign",
+                      type: DialogType.ERROR,
+                      customWidget: Container(),
+                    ),
+                    context);
+              }
+            } else {
+              MainDialog.showMyDialog(
+                  MainDialog(
+                    title: AppSettingTheme.getTheme(
+                      context,
+                      Config.FAILED_KEY,
+                      Config.FAILED_VALUE,
+                    ),
+                    text: AppSettingTheme.getTheme(
+                      context,
+                      Config.DISMISS_KEY,
+                      Config.DISMISS_VALUE,
+                    ),
+                    descriptions: "${AppSettingTheme.getTheme(
+                      context,
+                      Config.PLEASE_LOGIN_KEY,
+                      Config.PLEASE_LOGIN_VALUE,
+                    )}",
+                    type: DialogType.ERROR,
+                    customWidget: Button1(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Login(
+                                        destination: '1',
+                                      )));
+                        },
+                        text: "${AppSettingTheme.getTheme(
+                          context,
+                          Config.LOGIN_KEY,
+                          Config.LOGIN_VALUE,
+                        )}",
+                        hasIcon: false,
+                        color: Colors.red,
+                        fontColor: Colors.white),
+                  ),
+                  context);
+            }
+          },
+          isActive: true),
+    );
     ShapeBorder shapeBorder1 = RoundedRectangleBorder(
         borderRadius: const BorderRadius.all(Radius.circular(9)),
         side: BorderSide(width: 1, color: Colors.grey[300]!));

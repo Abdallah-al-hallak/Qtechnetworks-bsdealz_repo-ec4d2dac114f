@@ -631,8 +631,9 @@ class _SettingPageState extends State<SettingPage> {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),
                                       ),
-                                      onTap: () {
-                                        SharedFunc().setToken('token', '');
+                                      onTap: () async {
+                                        await SharedFunc()
+                                            .setToken('token', '');
                                         CustomSharedPrefs().clear();
                                         RefreshApp.of(context)!
                                             .apiHeaders
@@ -642,7 +643,7 @@ class _SettingPageState extends State<SettingPage> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) => Login(
-                                              destination: '',
+                                              destination: '2',
                                             ),
                                           ),
                                         );

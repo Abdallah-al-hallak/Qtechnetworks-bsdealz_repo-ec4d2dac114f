@@ -152,15 +152,10 @@ class CustomHeaderItemState extends State<CustomHeaderItem> {
               ),
               clickable: true,
               onPressed: () {
-                SharedFunc().setToken('token', '');
                 CustomSharedPrefs().clear();
                 RefreshApp.of(context)!.apiHeaders.token = null;
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const Login(
-                              destination: '2',
-                            )));
+                    context, MaterialPageRoute(builder: (context) => Splash()));
                 // WebDialog.showMyDialog(WebDialog(title: "",text: "Dismiss",
                 //   descriptions: "",customWidget: Splash(),),context);
               },

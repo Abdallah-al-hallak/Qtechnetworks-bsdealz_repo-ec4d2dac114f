@@ -10,6 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import '../../../localization/language_constants.dart';
 import '../../../main.dart';
 import '../../../network/HttpAPI.dart';
 import '../../../network/models/APICart.dart';
@@ -270,7 +271,7 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                                 MaterialPageRoute(
                                     builder: (context) => CartPage()));
                           },
-                          text: "Cart",
+                          text: getTranslated(context, 'cart'),
                         ),
                       ),
                     ],

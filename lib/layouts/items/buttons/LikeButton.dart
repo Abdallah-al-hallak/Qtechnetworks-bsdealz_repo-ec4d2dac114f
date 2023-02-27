@@ -4,6 +4,7 @@ import 'package:bsdealz/network/models/APIWishListItem.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import '../../../localization/language_constants.dart';
 import '../../../main.dart';
 import '../../../network/HttpAPI.dart';
 import '../../../utils/inherited/refresh_app_state.dart';
@@ -64,7 +65,7 @@ class _LikeButtonState extends State<LikeButton> {
                                       destination: '1',
                                     )));
                       },
-                      text: "Login",
+                      text: getTranslated(context, 'login'),
                       hasIcon: false,
                       color: Colors.red,
                       fontColor: Colors.white),

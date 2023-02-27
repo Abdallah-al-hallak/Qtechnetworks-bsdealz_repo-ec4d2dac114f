@@ -8,6 +8,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../../localization/language_constants.dart';
 import '../../../network/HttpAPI.dart';
 import '../../../utils/Config.dart';
 import '../../../utils/GetSettingByKey.dart';
@@ -129,7 +130,7 @@ class CouponItemSingleState extends State<CouponItemSingle> {
       width: 90,
       height: 30,
       child: MiniButton(
-          text: "Add more",
+          text: getTranslated(context, 'addmore'),
           onPressed: () {
             Navigator.push(
                 context,

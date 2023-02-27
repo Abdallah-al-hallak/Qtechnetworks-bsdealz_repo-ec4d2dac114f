@@ -13,6 +13,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../../localization/language_constants.dart';
 import '../../../main.dart';
 import '../../../network/HttpAPI.dart';
 
@@ -317,7 +318,7 @@ class CampaignItemSingleState extends State<CampaignItemSingle> {
                         children: [
                           BaseText(
                             color: Theme.of(context).primaryColor,
-                            text: "WIN",
+                            text: getTranslated(context, 'win'),
                             margin: 10,
                             marginh: 25,
                             fontSize: 20,

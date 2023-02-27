@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import '../../../localization/language_constants.dart';
 import '../../../main.dart';
 import '../../../network/HttpAPI.dart';
 import '../../../network/models/APIUser.dart';
@@ -203,7 +204,7 @@ class _CartPageState extends State<CartPage> {
           Center(
             child: BaseText(
               color: Colors.grey,
-              text: "Your cart is empty",
+              text: getTranslated(context, 'yourCart'),
               margin: 25,
               marginh: 25,
               fontSize: 20,
@@ -223,7 +224,7 @@ class _CartPageState extends State<CartPage> {
                 });
                 MyApp.refreshApp(context);
               },
-              text: "Start shopping",
+              text: getTranslated(context, 'startSh'),
               isActive: true),
         ],
       );
@@ -233,7 +234,9 @@ class _CartPageState extends State<CartPage> {
                   color: Colors.white,
                   child: Column(children: [
                     BackBar(
-                        height: 50, title: "My Cart", notificationsNumber: 0),
+                        height: 50,
+                        title: getTranslated(context, 'Mycart'),
+                        notificationsNumber: 0),
                     Expanded(child: cartWidget),
                   ]))));
     } else {
@@ -254,7 +257,7 @@ class _CartPageState extends State<CartPage> {
             leading: Container(
                 height: 20,
                 child: FooterText(
-                    text: "Promo code discount",
+                    text: getTranslated(context, 'promo'),
                     clickable: false,
                     onPressed: () {})),
             onTap: () {}),
@@ -296,7 +299,9 @@ class _CartPageState extends State<CartPage> {
             leading: Container(
                 height: 20,
                 child: FooterText(
-                    text: "My wallet", clickable: false, onPressed: () {})),
+                    text: getTranslated(context, 'MyWallet'),
+                    clickable: false,
+                    onPressed: () {})),
             onTap: () {}),
       );
 
@@ -349,7 +354,7 @@ class _CartPageState extends State<CartPage> {
                                 alignment: Alignment.center,
                                 child: ListTile(
                                     title: SettingText(
-                                        text: "Donate the product",
+                                        text: getTranslated(context, 'donate'),
                                         onPressed: () {},
                                         clickable: false),
                                     leading: Transform.scale(
@@ -377,7 +382,7 @@ class _CartPageState extends State<CartPage> {
                                 alignment: Alignment.center,
                                 child: ListTile(
                                     title: SettingText(
-                                        text: "Use my points",
+                                        text: getTranslated(context, 'useMy'),
                                         onPressed: () {},
                                         clickable: false),
                                     leading: Transform.scale(
@@ -425,7 +430,8 @@ class _CartPageState extends State<CartPage> {
                                               width: 90,
                                               height: 35,
                                               child: MiniButton(
-                                                  text: "Apply",
+                                                  text: getTranslated(
+                                                      context, 'apply'),
                                                   onPressed: () {
                                                     checkPromoCode(context);
                                                     applyPromoCode();
@@ -472,7 +478,7 @@ class _CartPageState extends State<CartPage> {
                                 margin: EdgeInsets.only(top: 10, bottom: 5),
                                 child: BaseText(
                                   color: Color(0Xff707070),
-                                  text: "Summary",
+                                  text: getTranslated(context, 'summary'),
                                   margin: 25,
                                   marginh: 25,
                                   fontSize: 13,
@@ -505,7 +511,7 @@ class _CartPageState extends State<CartPage> {
                                     leading: Container(
                                         height: 20,
                                         child: FooterText(
-                                            text: "SubTotal",
+                                            text: getTranslated(context, 'sub'),
                                             clickable: false,
                                             onPressed: () {})),
                                     onTap: () {
@@ -535,7 +541,8 @@ class _CartPageState extends State<CartPage> {
                                     leading: Container(
                                         height: 20,
                                         child: FooterText(
-                                            text: "Shipping fees",
+                                            text: getTranslated(
+                                                context, 'shopping'),
                                             clickable: false,
                                             onPressed: () {})),
                                     onTap: () {
@@ -593,7 +600,8 @@ class _CartPageState extends State<CartPage> {
                                     leading: Container(
                                         height: 20,
                                         child: FooterText(
-                                            text: "Total amount",
+                                            text:
+                                                getTranslated(context, 'total'),
                                             clickable: false,
                                             onPressed: () {})),
                                     onTap: () {}),
@@ -608,7 +616,7 @@ class _CartPageState extends State<CartPage> {
                               iconColor: Colors.white,
                               color: Theme.of(context).primaryColor,
                               height: 55,
-                              text: "Pay",
+                              text: getTranslated(context, 'pay'),
                               icon: Icons.home,
                               textColor: HexColor(AppSettingTheme.getTheme(
                                 context,

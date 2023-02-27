@@ -5,6 +5,7 @@ import 'package:bsdealz/utils/inherited/refresh_app_state.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
+import '../../../localization/language_constants.dart';
 import '../../../network/HttpAPI.dart';
 import '../../../network/models/APICampaign.dart';
 import '../../../network/models/APIProduct.dart';
@@ -150,7 +151,7 @@ class _ProductItemState extends State<ProductItem> {
                               context);
                         }
                       },
-                      text: "Buy Now",
+                      text: getTranslated(context, 'buy'),
                       isActive: true)),
             ],
           ),

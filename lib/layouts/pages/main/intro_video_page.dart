@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bsdealz/layouts/items/buttons/MainButton.dart';
 import 'package:bsdealz/layouts/items/icons/AppIcon.dart';
 import 'package:bsdealz/layouts/pages/credentials/login.dart';
+import 'package:bsdealz/localization/language_constants.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
@@ -80,7 +81,7 @@ class _IntroVideoPageState extends State<IntroVideoPage> {
               margin: const EdgeInsets.only(top: 500),
               child: MainButton(
                   isActive: true,
-                  text: "SKIP VIDEO",
+                  text: getTranslated(context, 'skip'),
                   onPressed: () {
                     if (RefreshApp.of(context)?.apiHeaders.token?.isNotEmpty ??
                         true) {

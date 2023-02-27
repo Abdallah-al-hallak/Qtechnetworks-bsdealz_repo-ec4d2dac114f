@@ -163,7 +163,7 @@ class _CampaignPageState extends State<CampaignPage> {
       );
     }
     mainIndecator = Container(
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         alignment: AlignmentDirectional.topStart,
         child: mainIndecator);
     Widget content = Container();

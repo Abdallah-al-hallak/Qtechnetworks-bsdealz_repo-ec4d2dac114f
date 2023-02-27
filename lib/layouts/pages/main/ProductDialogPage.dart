@@ -9,6 +9,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../../localization/language_constants.dart';
 import '../../../network/HttpAPI.dart';
 
 import '../../../network/models/APIProduct.dart';
@@ -155,7 +156,7 @@ class _ProductDialogPageState extends State<ProductDialogPage> {
                             context);
                       }
                     },
-                    text: "Buy Now",
+                    text: getTranslated(context, 'buy'),
                     isActive: true)),
           ],
         ),

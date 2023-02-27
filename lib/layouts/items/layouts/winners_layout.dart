@@ -1,6 +1,6 @@
-
 import 'package:bsdealz/layouts/items/texts/BaseText.dart';
 import 'package:bsdealz/layouts/items/texts/TitleText.dart';
+import 'package:bsdealz/localization/language_constants.dart';
 import 'package:bsdealz/network/HttpAPI.dart';
 import 'package:bsdealz/network/models/APIDraw.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../network/models/APIDraw.dart';
-
 
 class WinnersLayout extends StatefulWidget implements PreferredSizeWidget {
   final double height;
@@ -27,8 +26,6 @@ class WinnersLayout extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _WinnersLayoutState extends State<WinnersLayout> {
-
-
   _WinnersLayoutState();
 
   @override
@@ -41,9 +38,7 @@ class _WinnersLayoutState extends State<WinnersLayout> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return CustomDrawItem(
-        height: widget.height,Draws:widget.Draws
-    );
+    return CustomDrawItem(height: widget.height, Draws: widget.Draws);
   }
 }
 
@@ -52,7 +47,7 @@ class CustomDrawItem extends StatefulWidget {
   final double height;
   final List<ApiDraw> Draws;
 
-  const CustomDrawItem({Key ?key, required this.height, required this.Draws})
+  const CustomDrawItem({Key? key, required this.height, required this.Draws})
       : super(key: key);
 
   @override
@@ -74,14 +69,13 @@ class CustomDrawItemState extends State<CustomDrawItem> {
 
   @override
   Widget build(BuildContext context) {
-
     // Build a Form widget using the _formKey created above.
-    double width=234;
-    double radius=0;
+    double width = 234;
+    double radius = 0;
 
-    if(kIsWeb){
-      width=1500;
-      radius=21;
+    if (kIsWeb) {
+      width = 1500;
+      radius = 21;
     }
     return Container(
       height: widget.height,
@@ -90,13 +84,16 @@ class CustomDrawItemState extends State<CustomDrawItem> {
       child: Column(
         children: [
           Container(
-
             height: 60,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container( child: TitleText(text: "Winners", onPressed: (){}, clickable: false)),
+                Container(
+                    child: TitleText(
+                        text: getTranslated(context, 'winners'),
+                        onPressed: () {},
+                        clickable: false)),
                 //     Flexible(
                 //       flex: 1,
                 //   child: Container(
@@ -105,62 +102,61 @@ class CustomDrawItemState extends State<CustomDrawItem> {
                 //       margin: EdgeInsets.only(bottom: 10),
                 //       child: FooterText(text: "View More", onPressed: (){}, clickable: true)),
                 // )
-              ],),),
-
+              ],
+            ),
+          ),
           Flexible(
             child: Container(
               child: ListView.builder(
-                itemCount:widget.Draws.length ,
-                scrollDirection: Axis.horizontal,itemBuilder: (context, index) {
-                return DrawItem(widget.Draws[index]);
-              },),
+                itemCount: widget.Draws.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return DrawItem(widget.Draws[index]);
+                },
+              ),
             ),
           )
-
-
         ],
       ),
     );
   }
-  void _launchURL(_url,name) async =>
-      await canLaunch(_url) ? await launch(_url) : throw 'Could not Open'+name.toString();
+
+  void _launchURL(_url, name) async => await canLaunch(_url)
+      ? await launch(_url)
+      : throw 'Could not Open' + name.toString();
   Widget DrawItem(ApiDraw draw) {
-    ShapeBorder shapeBorder1=RoundedRectangleBorder(
+    ShapeBorder shapeBorder1 = RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(14)),
         side: BorderSide(width: 1, color: Colors.black));
-    double width=234;
-    double radius=21;
+    double width = 234;
+    double radius = 21;
 
-    if(kIsWeb){
-    //  width=1500;
-      radius=21;
+    if (kIsWeb) {
+      //  width=1500;
+      radius = 21;
     }
     return GestureDetector(
-      onTap: (){
-        _launchURL(draw.campaign!.image.toString(),"Draw link");
+      onTap: () {
+        _launchURL(draw.campaign!.image.toString(), "Draw link");
       },
       child: Stack(
         children: [
           Card(
             elevation: 2,
-
-            shape:RoundedRectangleBorder(
-              // side: BorderSide(color: Colors.green, width: 0.5),
+            shape: RoundedRectangleBorder(
+                // side: BorderSide(color: Colors.green, width: 0.5),
                 borderRadius: BorderRadius.circular(21)),
             child: Container(
-              width: width-10,
-              height: width-10,
+              width: width - 10,
+              height: width - 10,
               margin: EdgeInsets.all(5),
               padding: EdgeInsets.all(5),
               child: Column(
                 children: [
                   Flexible(
                     child: Stack(
-
                       children: [
-
                         Container(
-
                           alignment: Alignment.center,
                           margin: EdgeInsets.only(bottom: 10),
                           child: PhysicalModel(
@@ -171,10 +167,10 @@ class CustomDrawItemState extends State<CustomDrawItem> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(radius),
                               child: Container(
-
-                                child:Image(
-                                  image:CachedNetworkImageProvider(
-                                  HttpAPI().BASE_URL+draw.campaign!.image.toString()),
+                                child: Image(
+                                  image: CachedNetworkImageProvider(
+                                      HttpAPI().BASE_URL +
+                                          draw.campaign!.image.toString()),
                                   alignment: Alignment.center,
                                   fit: BoxFit.contain,
                                   //  width: double.infinity,
@@ -188,45 +184,53 @@ class CustomDrawItemState extends State<CustomDrawItem> {
                   ),
                   BaseText(
                     color: Theme.of(context).primaryColor,
-                    text:"Congratulations",
+                    text: "Congratulations",
                     margin: 3,
                     marginh: 5,
                     fontSize: 16,
-                    onPressed: (){},
-                    fontWeight: FontWeight.bold, clickable: false,),
+                    onPressed: () {},
+                    fontWeight: FontWeight.bold,
+                    clickable: false,
+                  ),
                   BaseText(
                     color: Colors.black,
-                    text:"Omar Ahmad \nOn winning Range River",
+                    text: "Omar Ahmad \nOn winning Range River",
                     margin: 5,
                     marginh: 5,
                     fontSize: 11,
-                    onPressed: (){},
-                    fontWeight: FontWeight.bold, clickable: false,),
-                  Container(margin:EdgeInsets.only(top: 5,bottom: 0),height: 1,color: Colors.grey[300],),
+                    onPressed: () {},
+                    fontWeight: FontWeight.bold,
+                    clickable: false,
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 5, bottom: 0),
+                    height: 1,
+                    color: Colors.grey[300],
+                  ),
                   BaseText(
                     color: Colors.grey[700]!,
-                    text:"Coupon no: CG-09876-8766-D",
+                    text: "Coupon no: CG-09876-8766-D",
                     margin: 5,
                     marginh: 5,
                     fontSize: 9,
-                    onPressed: (){},
-                    fontWeight: FontWeight.normal, clickable: false,),
-
+                    onPressed: () {},
+                    fontWeight: FontWeight.normal,
+                    clickable: false,
+                  ),
                   BaseText(
                     color: Colors.grey,
-                    text:"Announced on 28 August 2022",
+                    text: "Announced on 28 August 2022",
                     margin: 2,
                     marginh: 5,
                     fontSize: 8,
-                    onPressed: (){},
-                    fontWeight: FontWeight.normal, clickable: false,),
-
-
+                    onPressed: () {},
+                    fontWeight: FontWeight.normal,
+                    clickable: false,
+                  ),
                 ],
               ),
             ),
           ),
-
         ],
       ),
     );

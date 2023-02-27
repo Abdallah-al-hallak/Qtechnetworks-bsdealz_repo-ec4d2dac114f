@@ -1,4 +1,4 @@
-
+import 'package:bsdealz/localization/language_constants.dart';
 import 'package:bsdealz/utils/inherited/refresh_app_state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,17 +8,13 @@ import '../../items/lists/campaign_item.dart';
 import '../../items/lists/web/campaign_item_web.dart';
 import '../../items/texts/TitleText.dart';
 
-
 class MainFragment extends StatefulWidget {
-
-
   @override
-  _MainFragmentState createState() =>
-      _MainFragmentState();
+  _MainFragmentState createState() => _MainFragmentState();
 }
 
-class _MainFragmentState extends State<MainFragment>  with WidgetsBindingObserver{
-
+class _MainFragmentState extends State<MainFragment>
+    with WidgetsBindingObserver {
   final List<AppLifecycleState> _stateHistoryList = <AppLifecycleState>[];
   _MainFragmentState();
 
@@ -35,20 +31,27 @@ class _MainFragmentState extends State<MainFragment>  with WidgetsBindingObserve
   void didChangeAppLifecycleState(AppLifecycleState state) {
     setState(() {
       _stateHistoryList.add(state);
-      print("-------Reloading View main frag "+_stateHistoryList.last.toString());
-      if(_stateHistoryList.last.toString().contains("paused")){
+      print("-------Reloading View main frag " +
+          _stateHistoryList.last.toString());
+      if (_stateHistoryList.last.toString().contains("paused")) {
         RefreshApp.of(context)!.localCart.items!.clear();
         RefreshApp.of(context)!.activeCampaignWidgets.clear();
-        RefreshApp.of(context)!.apiAppVariables!.activeCampaigns!.forEach((element) {
+        RefreshApp.of(context)!
+            .apiAppVariables!
+            .activeCampaigns!
+            .forEach((element) {
           if (kIsWeb) {
             RefreshApp.of(context)!.activeCampaignWidgets.add(CampaignItemWeb(
-              mycampagin: element, height: 350, width: 1,
-            ));
+                  mycampagin: element,
+                  height: 350,
+                  width: 1,
+                ));
           } else {
             RefreshApp.of(context)!.activeCampaignWidgets.add(CampaignItem(
-
-              mycampagin: element, height: 555, width: 1,
-            ));
+                  mycampagin: element,
+                  height: 555,
+                  width: 1,
+                ));
           }
         });
         MyApp.refreshApp(context);
@@ -62,24 +65,22 @@ class _MainFragmentState extends State<MainFragment>  with WidgetsBindingObserve
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     //fetchData();
 
     {
-   //   EasyLoading.dismiss();
-      print("Token MainFragment-------"+RefreshApp.of(context)!.apiHeaders.toJson().toString());
-      print("apiAppVariables-------"+RefreshApp.of(context)!.apiAppVariables.toJson().toString());
-      double width=MediaQuery.of(context).size.width;
-      if(kIsWeb){
-        width=1500;
-
+      //   EasyLoading.dismiss();
+      print("Token MainFragment-------" +
+          RefreshApp.of(context)!.apiHeaders.toJson().toString());
+      print("apiAppVariables-------" +
+          RefreshApp.of(context)!.apiAppVariables.toJson().toString());
+      double width = MediaQuery.of(context).size.width;
+      if (kIsWeb) {
+        width = 1500;
       }
-      return
-      Container(
-
+      return Container(
         width: width,
         child: ListView(
           controller: RefreshApp.of(context)!.main_fragment_scroll_controller,
@@ -92,19 +93,28 @@ class _MainFragmentState extends State<MainFragment>  with WidgetsBindingObserve
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container( child: TitleText(text: "Active Campaigns", onPressed: (){}, clickable: false)),
-                ],),),
-          //  Container(height: 200,child: ListView( children: [Wrap(children:activeCampaginsWidgets!)])),
-            Wrap(children:  RefreshApp.of(context)!.activeCampaignWidgets),
+                  Container(
+                      child: TitleText(
+                          text: getTranslated(context, 'active'),
+                          onPressed: () {},
+                          clickable: false)),
+                ],
+              ),
+            ),
+            //  Container(height: 200,child: ListView( children: [Wrap(children:activeCampaginsWidgets!)])),
+            Wrap(children: RefreshApp.of(context)!.activeCampaignWidgets),
             RefreshApp.of(context)!.soldoutLayout,
             Container(
-
               height: 60,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container( child: TitleText(text: "Winners", onPressed: (){}, clickable: false)),
+                  Container(
+                      child: TitleText(
+                          text: getTranslated(context, 'winners'),
+                          onPressed: () {},
+                          clickable: false)),
                   //     Flexible(
                   //       flex: 1,
                   //   child: Container(
@@ -113,17 +123,14 @@ class _MainFragmentState extends State<MainFragment>  with WidgetsBindingObserve
                   //       margin: EdgeInsets.only(bottom: 10),
                   //       child: FooterText(text: "View More", onPressed: (){}, clickable: true)),
                   // )
-                ],),),
-        Wrap(children:RefreshApp.of(context)!.winnersWidgets)
-          //  RefreshApp.of(context)!.winnersLayout,
+                ],
+              ),
+            ),
+            Wrap(children: RefreshApp.of(context)!.winnersWidgets)
+            //  RefreshApp.of(context)!.winnersLayout,
           ],
         ),
       );
     }
-
-
-
   }
-
 }
-

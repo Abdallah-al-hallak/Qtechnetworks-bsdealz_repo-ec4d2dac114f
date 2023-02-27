@@ -14,6 +14,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import '../../../localization/language_constants.dart';
 import '../../../main.dart';
 import '../../../network/HttpAPI.dart';
 import '../../../network/models/APIOrder.dart';
@@ -36,13 +37,18 @@ import '../../items/tobars/back_bar.dart';
 import 'AddAddress.dart';
 import 'Invoice.dart';
 
-
 class CheckoutPage extends StatefulWidget {
-  static ApiAddress selectedAddress=new ApiAddress(address: "",apartmentNumber: "",state: "",country: "",city: "",building: "",street: "");
+  static ApiAddress selectedAddress = new ApiAddress(
+      address: "",
+      apartmentNumber: "",
+      state: "",
+      country: "",
+      city: "",
+      building: "",
+      street: "");
   static int? selectedId = -1;
   CheckoutPage({
     Key? key,
-
   }) : super(key: key);
 
   @override
@@ -50,119 +56,150 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
+  bool donationOn = false;
+  bool usePoints = false;
 
-  bool donationOn=false;
-  bool usePoints=false;
-
-  
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
     CustomSharedPrefs().getV("donationOn").then((value) {
-   setState(() {
-     if(value=="true") {
-       donationOn = true;
-     }else{
-       donationOn = false;
-     }
-   });
+      setState(() {
+        if (value == "true") {
+          donationOn = true;
+        } else {
+          donationOn = false;
+        }
+      });
     });
     CustomSharedPrefs().getV("usePoints").then((value) {
       setState(() {
-        if(value=="true") {
+        if (value == "true") {
           usePoints = true;
-        }else{
+        } else {
           usePoints = false;
         }
       });
-
     });
   }
 
-  checkout(){
+  checkout() {
     EasyLoading.show();
-    String orderType="O";
-    if(donationOn){
-      orderType="D";
+    String orderType = "O";
+    if (donationOn) {
+      orderType = "D";
     }
-    HttpAPI http=HttpAPI();
-    Dio dio=http.Inisalize(context);
-    return dio.post('placeorder',data:{
+    HttpAPI http = HttpAPI();
+    Dio dio = http.Inisalize(context);
+    return dio.post('placeorder', data: {
       "payment_method": "cash",
-      "address": "${CheckoutPage.selectedAddress.state} | ${CheckoutPage.selectedAddress.city} | ${CheckoutPage.selectedAddress.street} | ${CheckoutPage.selectedAddress.building} - ${CheckoutPage.selectedAddress.address}",
-      "promo_code": RefreshApp.of(context)!.promoCode.controller.text.toString(),
-      "order_type":orderType,
-      "address_id":CheckoutPage.selectedId
+      "address":
+          "${CheckoutPage.selectedAddress.state} | ${CheckoutPage.selectedAddress.city} | ${CheckoutPage.selectedAddress.street} | ${CheckoutPage.selectedAddress.building} - ${CheckoutPage.selectedAddress.address}",
+      "promo_code":
+          RefreshApp.of(context)!.promoCode.controller.text.toString(),
+      "order_type": orderType,
+      "address_id": CheckoutPage.selectedId
     }).then((value) {
-      if(value.data['status']=='success'){
-    //    List<ApiAddress> addresses= List<ApiAddress>.from(value.data['data'].map((model)=> ApiAddress.fromJson(model)));
-        RefreshApp.of(context)!.OrderDetails=ApiOrder.fromJson(value.data["data"]);
+      if (value.data['status'] == 'success') {
+        //    List<ApiAddress> addresses= List<ApiAddress>.from(value.data['data'].map((model)=> ApiAddress.fromJson(model)));
+        RefreshApp.of(context)!.OrderDetails =
+            ApiOrder.fromJson(value.data["data"]);
 
         setState(() {
-
           RefreshApp.of(context)!.localCart.items!.clear();
-          RefreshApp.of(context)!.fetchServerData("app-customer", context)!.then((value2) {
+          RefreshApp.of(context)!
+              .fetchServerData("app-customer", context)!
+              .then((value2) {
             EasyLoading.dismiss();
-              Navigator.popUntil(context, ModalRoute.withName('/home'));
-              Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-            Navigator.push(context, MaterialPageRoute(builder: (context) => InvoicePage()));
-              MainDialog.showMyDialog(MainDialog(title: "Order success", descriptions: "Start shopping", text: "", type: DialogType.SUCCESS, customWidget: Container())
-                  , context);
+            Navigator.popUntil(context, ModalRoute.withName('/home'));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => HomePage()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => InvoicePage()));
+            MainDialog.showMyDialog(
+                MainDialog(
+                    title: "Order success",
+                    descriptions: "Start Shopping",
+                    text: "",
+                    type: DialogType.SUCCESS,
+                    customWidget: Container()),
+                context);
           });
         });
-
-      }else{
+      } else {
         EasyLoading.dismiss();
-        MainDialog.showMyDialog(MainDialog(title: "Checkout failed", descriptions: "Retry later", text: "", type: DialogType.ERROR, customWidget: Container())
-            , context);
+        MainDialog.showMyDialog(
+            MainDialog(
+                title: "Checkout failed",
+                descriptions: "Retry later",
+                text: "",
+                type: DialogType.ERROR,
+                customWidget: Container()),
+            context);
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     RefreshApp.of(context)!.addressesWidgets.clear();
-    int i=0;
+    int i = 0;
     RefreshApp.of(context)!.apiAppVariables!.addresses!.forEach((element) {
-      if(i==0 &&CheckoutPage.selectedId==-1){
-        CheckoutPage.selectedAddress=element;
-        CheckoutPage.selectedId=element.id;
+      if (i == 0 && CheckoutPage.selectedId == -1) {
+        CheckoutPage.selectedAddress = element;
+        CheckoutPage.selectedId = element.id;
         RefreshApp.of(context)!.addressesWidgets.add(AddressItem(
-          addressItem: element, height: 120,width: 1,
-          groupValue: CheckoutPage.selectedId, value: element.id, onChanged: (int? newValue) {
-          setState(() {
-            CheckoutPage.selectedId = newValue;
-            print("selected Address="+element.id.toString());
-          });
-        },
-        ));
-      }else{
+              addressItem: element,
+              height: 120,
+              width: 1,
+              groupValue: CheckoutPage.selectedId,
+              value: element.id,
+              onChanged: (int? newValue) {
+                setState(() {
+                  CheckoutPage.selectedId = newValue;
+                  print("selected Address=" + element.id.toString());
+                });
+              },
+            ));
+      } else {
         RefreshApp.of(context)!.addressesWidgets.add(AddressItem(
-          addressItem: element, height: 120,width: 1,
-          groupValue: CheckoutPage.selectedId, value:  element.id, onChanged: (int? newValue) {
-          setState(() {
-            CheckoutPage.selectedAddress=element;
-            print("selected Address="+element.id.toString());
-            CheckoutPage.selectedId = newValue;
-          });
-        },
-        ));
+              addressItem: element,
+              height: 120,
+              width: 1,
+              groupValue: CheckoutPage.selectedId,
+              value: element.id,
+              onChanged: (int? newValue) {
+                setState(() {
+                  CheckoutPage.selectedAddress = element;
+                  print("selected Address=" + element.id.toString());
+                  CheckoutPage.selectedId = newValue;
+                });
+              },
+            ));
       }
       i++;
-
-
-
     });
-    Widget promoCodeWidget=Container(
+    Widget promoCodeWidget = Container(
       height: 25,
-      margin: EdgeInsets.only(left: 5,right: 5),
+      margin: EdgeInsets.only(left: 5, right: 5),
       alignment: Alignment.center,
-      child:     ListTile(
+      child: ListTile(
           tileColor: Colors.grey[100],
-          title:  Container(),
-          trailing:  Container(  height: 20,child: FooterText(text: "${RefreshApp.of(context)!.apiAppVariables.cart!.promoCodeDiscount}",clickable: false,onPressed: (){})),
-          leading:Container(  height: 20,child: FooterText(text: "Promo code discount",clickable: false,onPressed: (){})),
+          title: Container(),
+          trailing: Container(
+              height: 20,
+              child: FooterText(
+                  text:
+                      "${RefreshApp.of(context)!.apiAppVariables.cart!.promoCodeDiscount}",
+                  clickable: false,
+                  onPressed: () {})),
+          leading: Container(
+              height: 20,
+              child: FooterText(
+                  text: "Promo code discount",
+                  clickable: false,
+                  onPressed: () {})),
           onTap: () {
             showDialog(
               context: context,
@@ -173,42 +210,49 @@ class _CheckoutPageState extends State<CheckoutPage> {
             );
           }),
     );
-    ShapeBorder shapeBorder1=RoundedRectangleBorder(
-      // side: BorderSide(color: Colors.green, width: 0.5),
+    ShapeBorder shapeBorder1 = RoundedRectangleBorder(
+        // side: BorderSide(color: Colors.green, width: 0.5),
         borderRadius: BorderRadius.circular(19));
 
-    Widget addressWidget=Container();
-    Widget newAddress=   Container(alignment: Alignment.topLeft,
-        margin: EdgeInsets.only(top: 0,bottom: 5,right: 20,left: 20),
-        child:
-        BaseText(
-          color:Color(0XFF707070),
-          margin: 0,
-          text: "+Add address",
-          marginh: 35,
-          fontSize: 10,
-          onPressed: (){
-        if(kIsWeb){
-        WebDialog.showMyDialog(WebDialog(title: "",text: "Dismiss",
-        descriptions: "",customWidget: AddAddress(),),context);
-        }else {
-        Navigator.push(
-        context, MaterialPageRoute(builder: (context) => AddAddress()));
-        }
+    Widget addressWidget = Container();
+    Widget newAddress = Container(
+      alignment: Alignment.topLeft,
+      margin: EdgeInsets.only(top: 0, bottom: 5, right: 20, left: 20),
+      child: BaseText(
+        color: Color(0XFF707070),
+        margin: 0,
+        text: "+Add address",
+        marginh: 35,
+        fontSize: 10,
+        onPressed: () {
+          if (kIsWeb) {
+            WebDialog.showMyDialog(
+                WebDialog(
+                  title: "",
+                  text: "Dismiss",
+                  descriptions: "",
+                  customWidget: AddAddress(),
+                ),
+                context);
+          } else {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => AddAddress()));
+          }
         },
-          clickable: true,
-          fontWeight: FontWeight.normal,
-        ),);
-    if(!donationOn){
-      List<Widget>addressLayiout=RefreshApp.of(context)!.addressesWidgets!;
+        clickable: true,
+        fontWeight: FontWeight.normal,
+      ),
+    );
+    if (!donationOn) {
+      List<Widget> addressLayiout = RefreshApp.of(context)!.addressesWidgets!;
       addressLayiout.add(newAddress);
-      addressWidget= Wrap(children:addressLayiout ,
+      addressWidget = Wrap(
+        children: addressLayiout,
       );
-
     }
-    Widget myWalletTile=Container();
-    Widget pointsToSubtract=Container();
-    if(usePoints) {
+    Widget myWalletTile = Container();
+    Widget pointsToSubtract = Container();
+    if (usePoints) {
       myWalletTile = Container(
         height: 20,
         margin: EdgeInsets.only(left: 5, right: 5),
@@ -217,14 +261,18 @@ class _CheckoutPageState extends State<CheckoutPage> {
             tileColor: Colors.grey[100],
             title: Container(),
             trailing: Container(
-                height: 20, child: FooterText(text: "${RefreshApp
-                .of(context)!
-                .apiAppVariables
-                .cart!
-                .pointsDiscount}", clickable: false, onPressed: () {})),
-            leading: Container(height: 20,
+                height: 20,
                 child: FooterText(
-                    text: "My wallet", clickable: false, onPressed: () {})),
+                    text:
+                        "${RefreshApp.of(context)!.apiAppVariables.cart!.pointsDiscount}",
+                    clickable: false,
+                    onPressed: () {})),
+            leading: Container(
+                height: 20,
+                child: FooterText(
+                    text: getTranslated(context, 'MyWallet'),
+                    clickable: false,
+                    onPressed: () {})),
             onTap: () {
               showDialog(
                 context: context,
@@ -236,61 +284,71 @@ class _CheckoutPageState extends State<CheckoutPage> {
             }),
       );
 
-       pointsToSubtract = Container(
+      pointsToSubtract = Container(
         height: 20,
         margin: EdgeInsets.only(left: 30, right: 30, top: 20),
         alignment: Alignment.topLeft,
-        child: Text("*You will use ${RefreshApp
-            .of(context)!
-            .apiAppVariables
-            .cart!
-            .pointsToSubtract} points",
-          style: TextStyle(color: Colors.red, fontSize: 9),),
+        child: Text(
+          "*You will use ${RefreshApp.of(context)!.apiAppVariables.cart!.pointsToSubtract} points",
+          style: TextStyle(color: Colors.red, fontSize: 9),
+        ),
       );
     }
     return Scaffold(
       body: SafeArea(
         child: Container(
           color: Colors.white,
-
           child: Column(
-
             children: [
-              BackBar(height: 60,title: " Checkout",notificationsNumber: 0),
+              BackBar(height: 60, title: " Checkout", notificationsNumber: 0),
               Expanded(
                 child: ListView(
                   children: [
-                     addressWidget,
-                    Container( height: 450,
+                    addressWidget,
+                    Container(
+                      height: 450,
                       child: Column(
                         children: [
-                          Container(alignment: Alignment.center,
-                              margin: EdgeInsets.only(top: 10,bottom: 5),
-                              child:
-                              BaseText(
+                          Container(
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.only(top: 10, bottom: 5),
+                              child: BaseText(
                                 color: Color(0Xff707070),
-                                text:"Summary",
+                                text: getTranslated(context, 'summary'),
                                 margin: 25,
                                 marginh: 25,
                                 fontSize: 13,
-                                onPressed: (){},
-                                fontWeight: FontWeight.bold, clickable: false,
-                              )
-
-                          ),
-                          Container(alignment: Alignment.center,
-                            margin: EdgeInsets.only(top: 0,bottom: 5,right: 10,left: 10),
+                                onPressed: () {},
+                                fontWeight: FontWeight.bold,
+                                clickable: false,
+                              )),
+                          Container(
+                            alignment: Alignment.center,
+                            margin: EdgeInsets.only(
+                                top: 0, bottom: 5, right: 10, left: 10),
                             height: 1,
-                            color: Colors.grey[300],),
+                            color: Colors.grey[300],
+                          ),
                           Container(
                             height: 20,
-                            margin: EdgeInsets.only(left: 5,right: 5),
+                            margin: EdgeInsets.only(left: 5, right: 5),
                             alignment: Alignment.center,
-                            child:     ListTile(
+                            child: ListTile(
                                 tileColor: Colors.grey[100],
-                                title:  Container(),
-                                trailing:  Container(  height: 20,child: FooterText(text: "${RefreshApp.of(context)!.apiAppVariables.cart!.subtotal}",clickable: false,onPressed: (){})),
-                                leading:Container(  height: 20,child: FooterText(text: "SubTotal",clickable: false,onPressed: (){})),
+                                title: Container(),
+                                trailing: Container(
+                                    height: 20,
+                                    child: FooterText(
+                                        text:
+                                            "${RefreshApp.of(context)!.apiAppVariables.cart!.subtotal}",
+                                        clickable: false,
+                                        onPressed: () {})),
+                                leading: Container(
+                                    height: 20,
+                                    child: FooterText(
+                                        text: "SubTotal",
+                                        clickable: false,
+                                        onPressed: () {})),
                                 onTap: () {
                                   // showDialog(
                                   //   context: context,
@@ -304,13 +362,23 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
                           Container(
                             height: 20,
-                            margin: EdgeInsets.only(left: 5,right: 5),
+                            margin: EdgeInsets.only(left: 5, right: 5),
                             alignment: Alignment.center,
-                            child:     ListTile(
+                            child: ListTile(
                                 tileColor: Colors.grey[100],
-                                title:  Container(),
-                                trailing:  Container(  height: 20,child: FooterText(text: "-",clickable: false,onPressed: (){})),
-                                leading:Container(  height: 20,child: FooterText(text: "Shipping fees",clickable: false,onPressed: (){})),
+                                title: Container(),
+                                trailing: Container(
+                                    height: 20,
+                                    child: FooterText(
+                                        text: "-",
+                                        clickable: false,
+                                        onPressed: () {})),
+                                leading: Container(
+                                    height: 20,
+                                    child: FooterText(
+                                        text: "Shipping fees",
+                                        clickable: false,
+                                        onPressed: () {})),
                                 onTap: () {
                                   // showDialog(
                                   //   context: context,
@@ -337,75 +405,99 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           // ),
                           myWalletTile,
 
-
-                          Container(
-                              height: 40,
-                              child: pointsToSubtract),
+                          Container(height: 40, child: pointsToSubtract),
 
                           Column(
                             children: [
                               Container(
-                                margin: EdgeInsets.only(top: 0,bottom: 1,right: 10,left: 10),
+                                margin: EdgeInsets.only(
+                                    top: 0, bottom: 1, right: 10, left: 10),
                                 height: 1,
-                                color: Colors.grey[300],),
+                                color: Colors.grey[300],
+                              ),
                               Container(
                                 height: 20,
-                                margin: EdgeInsets.only(left: 5,right: 5,bottom: 20),
+                                margin: EdgeInsets.only(
+                                    left: 5, right: 5, bottom: 20),
                                 alignment: Alignment.topCenter,
-                                child:     ListTile(
+                                child: ListTile(
                                     tileColor: Colors.grey[100],
-                                    title:  Container(),
-                                    trailing:  Container(  height: 20,child: FooterText(text: "${RefreshApp.of(context)!.apiAppVariables.cart!.total}",clickable: false,onPressed: (){})),
-                                    leading:Container(  height: 20,child: FooterText(text: "Total amount",clickable: false,onPressed: (){})),
-                                    onTap: () {
-
-                                    }),
+                                    title: Container(),
+                                    trailing: Container(
+                                        height: 20,
+                                        child: FooterText(
+                                            text:
+                                                "${RefreshApp.of(context)!.apiAppVariables.cart!.total}",
+                                            clickable: false,
+                                            onPressed: () {})),
+                                    leading: Container(
+                                        height: 20,
+                                        child: FooterText(
+                                            text: "Total amount",
+                                            clickable: false,
+                                            onPressed: () {})),
+                                    onTap: () {}),
                               ),
                             ],
                           ),
                           Container(
                             margin: EdgeInsets.only(top: 20),
-                            child:
-                            BaseButton(
+                            child: BaseButton(
                               isfilled: true,
-
                               isActive: true,
-                              iconColor:Colors.white,
+                              iconColor: Colors.white,
                               color: Theme.of(context).primaryColor,
-                              height:55,
-                              text:"Checkout",
+                              height: 55,
+                              text: getTranslated(context, 'checkO'),
                               icon: Icons.home,
-                              textColor:HexColor(AppSettingTheme.getTheme(context,Config.MAIN_BUTTON_TEXT_COLOR_KEY,Config.MAIN_BUTTON_TEXT_COLOR_VALUE,)),
+                              textColor: HexColor(AppSettingTheme.getTheme(
+                                context,
+                                Config.MAIN_BUTTON_TEXT_COLOR_KEY,
+                                Config.MAIN_BUTTON_TEXT_COLOR_VALUE,
+                              )),
                               padding: 5,
                               iconpadding: 5,
                               margin: 0,
                               radius: 19,
                               fontSize: 16,
-                              ovalpadding:4,
-                              onPressed: (){
-                                if(CheckoutPage.selectedAddress.state!=null&&CheckoutPage.selectedAddress.state!="" && donationOn==false) {
+                              ovalpadding: 4,
+                              onPressed: () {
+                                if (CheckoutPage.selectedAddress.state !=
+                                        null &&
+                                    CheckoutPage.selectedAddress.state != "" &&
+                                    donationOn == false) {
                                   checkout();
-                                }else{
-                                  if(donationOn){
+                                } else {
+                                  if (donationOn) {
                                     checkout();
-                                  }else {
-                                    MainDialog.showMyDialog(MainDialog(
-                                        title: "Can't complete order",
-                                        descriptions: "Add address first please",
-                                        text: "",
-                                        type: DialogType.WARNING,
-                                        customWidget: Container())
-                                        , context);
+                                  } else {
+                                    MainDialog.showMyDialog(
+                                        MainDialog(
+                                            title: "Can't complete order",
+                                            descriptions:
+                                                "Add address first please",
+                                            text: "",
+                                            type: DialogType.WARNING,
+                                            customWidget: Container()),
+                                        context);
                                   }
                                 }
                               },
                               width: 350,
-                              startColor:HexColor(AppSettingTheme.getTheme(context,Config.MAIN_BUTTON_START_COLOR_KEY,Config.MAIN_BUTTON_START_COLOR_VALUE,)),
-                              endColor: HexColor(AppSettingTheme.getTheme(context,Config.MAIN_BUTTON_END_COLOR_KEY,Config.MAIN_BUTTON_END_COLOR_VALUE,)), isGradient: true,
+                              startColor: HexColor(AppSettingTheme.getTheme(
+                                context,
+                                Config.MAIN_BUTTON_START_COLOR_KEY,
+                                Config.MAIN_BUTTON_START_COLOR_VALUE,
+                              )),
+                              endColor: HexColor(AppSettingTheme.getTheme(
+                                context,
+                                Config.MAIN_BUTTON_END_COLOR_KEY,
+                                Config.MAIN_BUTTON_END_COLOR_VALUE,
+                              )),
+                              isGradient: true,
                             ),
                           )
-
-                         ],
+                        ],
                       ),
                     ),
                   ],

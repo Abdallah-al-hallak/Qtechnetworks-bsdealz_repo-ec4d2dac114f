@@ -4,6 +4,7 @@ import 'package:bsdealz/layouts/items/texts/SettingText.dart';
 import 'package:bsdealz/layouts/items/texts/SubTitleText.dart';
 import 'package:bsdealz/layouts/pages/main/ChangePasswordPage.dart';
 import 'package:bsdealz/layouts/pages/main/splash.dart';
+import 'package:bsdealz/localization/language_constants.dart';
 import 'package:bsdealz/main.dart';
 import 'package:bsdealz/network/models/APIHeaders.dart';
 import 'package:bsdealz/network/models/APIUser.dart';
@@ -11,6 +12,7 @@ import 'package:bsdealz/utils/inherited/refresh_app_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../../../localization/localization.dart';
 import '../../../network/HttpAPI.dart';
 import '../../../utils/shared_func.dart';
 import '../../../utils/sharedprefs.dart';
@@ -114,7 +116,7 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                     BaseText(
                       color: Colors.black,
-                      text: "Profile",
+                      text: getTranslated(context, 'profile'),
                       margin: 0,
                       marginh: 25,
                       fontSize: 25,
@@ -213,18 +215,19 @@ class _SettingPageState extends State<SettingPage> {
                             ),
                             Container(
                               height: 1,
-                              margin: EdgeInsets.only(left: 20, right: 20),
+                              margin:
+                                  const EdgeInsets.only(left: 20, right: 20),
                               color: Colors.grey[300],
                             ),
                             InkWell(
                               onTap: () {},
-                              child: Container(
+                              child: SizedBox(
                                 child: ListTile(
                                     title: SettingText(
                                         text: "Saved cards/Payment methods",
                                         clickable: false,
                                         onPressed: () {}),
-                                    trailing: Icon(
+                                    trailing: const Icon(
                                       size: 20,
                                       Icons.arrow_forward_ios,
                                       color: Colors.grey,
@@ -352,7 +355,7 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                     BaseText(
                       color: Colors.black,
-                      text: "Info",
+                      text: getTranslated(context, 'info'),
                       margin: 0,
                       marginh: 25,
                       fontSize: 25,
@@ -530,7 +533,7 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                     BaseText(
                       color: Colors.black,
-                      text: "Setting",
+                      text: getTranslated(context, 'Setting'),
                       margin: 0,
                       marginh: 25,
                       fontSize: 25,
@@ -576,7 +579,10 @@ class _SettingPageState extends State<SettingPage> {
                               child: Container(
                                 child: ListTile(
                                     title: SettingText(
-                                        text: "Currency",
+                                        text: getTranslated(
+                                          context,
+                                          'Currency',
+                                        ).toString(),
                                         clickable: false,
                                         onPressed: () {}),
                                     trailing: Container(

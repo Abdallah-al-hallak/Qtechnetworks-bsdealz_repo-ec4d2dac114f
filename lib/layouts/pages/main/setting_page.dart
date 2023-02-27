@@ -3,6 +3,8 @@ import 'package:bsdealz/layouts/items/layouts/language_indicator.dart';
 import 'package:bsdealz/layouts/items/texts/SettingText.dart';
 import 'package:bsdealz/layouts/items/texts/SubTitleText.dart';
 import 'package:bsdealz/layouts/pages/main/ChangePasswordPage.dart';
+import 'package:bsdealz/layouts/pages/main/how_it_works.dart';
+import 'package:bsdealz/layouts/pages/main/our_charity_work.dart';
 import 'package:bsdealz/layouts/pages/main/splash.dart';
 import 'package:bsdealz/main.dart';
 import 'package:bsdealz/network/models/APIHeaders.dart';
@@ -377,51 +379,86 @@ class _SettingPageState extends State<SettingPage> {
                             InkWell(
                               onTap: () {},
                               child: Container(
-                                child: ListTile(
-                                    title: SettingText(
-                                        text: "How it works",
-                                        clickable: false,
-                                        onPressed: () {}),
-                                    trailing: Icon(
-                                      size: 20,
-                                      Icons.arrow_forward_ios,
-                                      color: Colors.grey,
-                                    ),
-                                    onTap: () {
-                                      if (kIsWeb) {
-                                        WebDialog.showMyDialog(
-                                            WebDialog(
-                                              title: "",
-                                              text: "Dismiss",
-                                              descriptions: "",
-                                              customWidget: ContentWebView(
-                                                  url: HttpAPI()
-                                                          .BASE_URL
-                                                          .replaceAll(
-                                                              "http://", "")
-                                                          .replaceAll(
-                                                              "https://", "") +
-                                                      "/hot-it-works.pdf"),
-                                            ),
-                                            context);
-                                      } else {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                ContentWebView(
-                                                    url: HttpAPI()
-                                                            .BASE_URL
-                                                            .replaceAll(
-                                                                "http://", "")
-                                                            .replaceAll(
-                                                                "https://",
-                                                                "") +
-                                                        "/hot-it-works.pdf"),
-                                          ),
-                                        );
-                                      }
-                                    }),
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    child: ListTile(
+                                        title: SettingText(
+                                            text: "How it works",
+                                            clickable: false,
+                                            onPressed: () {}),
+                                        trailing: Icon(
+                                          size: 20,
+                                          Icons.arrow_forward_ios,
+                                          color: Colors.grey,
+                                        ),
+                                        onTap: () {
+                                          if (kIsWeb) {
+                                            WebDialog.showMyDialog(
+                                                WebDialog(
+                                                  title: "",
+                                                  text: "Dismiss",
+                                                  descriptions: "",
+                                                  customWidget: HowItWorks(),
+                                                ),
+                                                context);
+                                          } else {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HowItWorks(),
+                                              ),
+                                            );
+                                          }
+                                        }),
+                                  ),
+                                ),
+                                // child: ListTile(
+                                //     title: SettingText(
+                                //         text: "How it works",
+                                //         clickable: false,
+                                //         onPressed: () {}),
+                                //     trailing: Icon(
+                                //       size: 20,
+                                //       Icons.arrow_forward_ios,
+                                //       color: Colors.grey,
+                                //     ),
+                                //     onTap: () {
+                                //       if (kIsWeb) {
+                                //         WebDialog.showMyDialog(
+                                //             WebDialog(
+                                //               title: "",
+                                //               text: "Dismiss",
+                                //               descriptions: "",
+                                //               customWidget: ContentWebView(
+                                //                   url: HttpAPI()
+                                //                           .BASE_URL
+                                //                           .replaceAll(
+                                //                               "http://", "")
+                                //                           .replaceAll(
+                                //                               "https://", "") +
+                                //                       "/hot-it-works.pdf"),
+                                //             ),
+                                //             context);
+                                //       } else {
+                                //         Navigator.push(
+                                //           context,
+                                //           MaterialPageRoute(
+                                //             builder: (context) =>
+                                //                 ContentWebView(
+                                //                     url: HttpAPI()
+                                //                             .BASE_URL
+                                //                             .replaceAll(
+                                //                                 "http://", "")
+                                //                             .replaceAll(
+                                //                                 "https://",
+                                //                                 "") +
+                                //                         "/hot-it-works.pdf"),
+                                //           ),
+                                //         );
+                                //       }
+                                //     }),
                               ),
                             ),
                             Container(
@@ -431,53 +468,89 @@ class _SettingPageState extends State<SettingPage> {
                             ),
                             InkWell(
                               onTap: () {},
-                              child: Container(
-                                child: ListTile(
-                                    title: SettingText(
-                                        text: "Our charity work",
-                                        clickable: false,
-                                        onPressed: () {}),
-                                    trailing: Icon(
-                                      size: 20,
-                                      Icons.arrow_forward_ios,
-                                      color: Colors.grey,
-                                    ),
-                                    onTap: () {
-                                      if (kIsWeb) {
-                                        WebDialog.showMyDialog(
-                                            WebDialog(
-                                              title: "",
-                                              text: "Dismiss",
-                                              descriptions: "",
-                                              customWidget: ContentWebView(
-                                                  url: HttpAPI()
-                                                          .BASE_URL
-                                                          .replaceAll(
-                                                              "http://", "")
-                                                          .replaceAll(
-                                                              "https://", "") +
-                                                      "/our-charity.pdf"),
+                              child:  InkWell(
+                                onTap: () {},
+                                child: Container(
+                                  child: ListTile(
+                                      title: SettingText(
+                                          text: "Our charity work",
+                                          clickable: false,
+                                          onPressed: () {}),
+                                      trailing: Icon(
+                                        size: 20,
+                                        Icons.arrow_forward_ios,
+                                        color: Colors.grey,
+                                      ),
+                                      onTap: () {
+                                        if (kIsWeb) {
+                                          WebDialog.showMyDialog(
+                                              WebDialog(
+                                                title: "",
+                                                text: "Dismiss",
+                                                descriptions: "",
+                                                customWidget: OurCharity(),
+                                              ),
+                                              context);
+                                        } else {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  OurCharity(),
                                             ),
-                                            context);
-                                      } else {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                ContentWebView(
-                                                    url: HttpAPI()
-                                                            .BASE_URL
-                                                            .replaceAll(
-                                                                "http://", "")
-                                                            .replaceAll(
-                                                                "https://",
-                                                                "") +
-                                                        "/our-charity.pdf"),
-                                          ),
-                                        );
-                                      }
-                                    }),
+                                          );
+                                        }
+                                      }),
+                                ),
                               ),
+                              // child: Container(
+                              //   child:
+                              //   ListTile(
+                              //       title: SettingText(
+                              //           text: "Our charity work",
+                              //           clickable: false,
+                              //           onPressed: () {}),
+                              //       trailing: Icon(
+                              //         size: 20,
+                              //         Icons.arrow_forward_ios,
+                              //         color: Colors.grey,
+                              //       ),
+                              //       onTap: () {
+                              //         if (kIsWeb) {
+                              //           WebDialog.showMyDialog(
+                              //               WebDialog(
+                              //                 title: "",
+                              //                 text: "Dismiss",
+                              //                 descriptions: "",
+                              //                 customWidget: ContentWebView(
+                              //                     url: HttpAPI()
+                              //                             .BASE_URL
+                              //                             .replaceAll(
+                              //                                 "http://", "")
+                              //                             .replaceAll(
+                              //                                 "https://", "") +
+                              //                         "/our-charity.pdf"),
+                              //               ),
+                              //               context);
+                              //         } else {
+                              //           Navigator.push(
+                              //             context,
+                              //             MaterialPageRoute(
+                              //               builder: (context) =>
+                              //                   ContentWebView(
+                              //                       url: HttpAPI()
+                              //                               .BASE_URL
+                              //                               .replaceAll(
+                              //                                   "http://", "")
+                              //                               .replaceAll(
+                              //                                   "https://",
+                              //                                   "") +
+                              //                           "/our-charity.pdf"),
+                              //             ),
+                              //           );
+                              //         }
+                              //       }),
+                              // ),
                             ),
                             Container(
                               height: 1,

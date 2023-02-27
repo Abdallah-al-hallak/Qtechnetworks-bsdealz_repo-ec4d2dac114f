@@ -1,15 +1,9 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:bsdealz/layouts/items/buttons/MainButton.dart';
-
 import 'package:bsdealz/layouts/items/textboxes/BaseEditText.dart';
-import 'package:bsdealz/layouts/items/textboxes/CustomTextbox.dart';
-import 'package:bsdealz/layouts/items/textboxes/TextboxEmail.dart';
-import 'package:bsdealz/layouts/items/textboxes/TextboxPassword.dart';
-import 'package:bsdealz/layouts/items/textboxes/TextboxPhone.dart';
 import 'package:bsdealz/layouts/items/texts/FooterText.dart';
 import 'package:bsdealz/layouts/items/texts/SubTitleText.dart';
-import 'package:bsdealz/layouts/pages/credentials/login.dart';
 import 'package:bsdealz/network/HttpAPI.dart';
 import 'package:bsdealz/network/models/APIUser.dart';
 import 'package:bsdealz/utils/inherited/refresh_app_state.dart';
@@ -18,18 +12,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 import '../../../main.dart';
-import '../../../network/models/ApiAddress.dart';
 import '../../dialogs/main_dialog.dart';
 import '../../forms/Validator.dart';
 import '../../items/tobars/back_bar.dart';
-import 'CheckoutPage.dart';
 
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class PersonalDetailsPage extends StatefulWidget{
   @override
@@ -183,43 +172,43 @@ class PerasonalDetailsFormState extends State<PerasonalDetailsForm> {
 
                               child: dob)),
                         ))),
-                // Container(
-                //   margin: EdgeInsets.all(10),
-                //   alignment:Alignment.topLeft,
-                //   child: SubTitleText(text: "Address",onPressed: (){},clickable: false,),
-                // ),
-                // Container(
-                //   margin: EdgeInsets.only(left: 20,right: 20),
-                //   alignment:Alignment.topLeft,
-                //   child: FooterText(text: "City",onPressed: (){},clickable: false,),
-                // ),
-                // Container(
-                //     margin: EdgeInsets.all(0),
-                //     child: city),
-                // Container(
-                //   margin: EdgeInsets.only(left: 20,right: 20),
-                //   alignment:Alignment.topLeft,
-                //   child: FooterText(text: "state",onPressed: (){},clickable: false,),
-                // ),
-                // Container(
-                //     margin: EdgeInsets.all(0),
-                //     child: state),
-                // Container(
-                //   margin: EdgeInsets.only(left: 20,right: 20),
-                //   alignment:Alignment.topLeft,
-                //   child: FooterText(text: "street",onPressed: (){},clickable: false,),
-                // ),
-                // Container(
-                //     margin: EdgeInsets.all(0),
-                //     child: street),
-                // Container(
-                //   margin: EdgeInsets.only(left: 20,right: 20),
-                //   alignment:Alignment.topLeft,
-                //   child: FooterText(text: "building",onPressed: (){},clickable: false,),
-                // ),
-                // Container(
-                //     margin: EdgeInsets.all(0),
-                //     child: building),
+                Container(
+                  margin: EdgeInsets.all(10),
+                  alignment:Alignment.topLeft,
+                  child: SubTitleText(text: "Address",onPressed: (){},clickable: false,),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 20,right: 20),
+                  alignment:Alignment.topLeft,
+                  child: FooterText(text: "City",onPressed: (){},clickable: false,),
+                ),
+                Container(
+                    margin: EdgeInsets.all(0),
+                    child: city),
+                Container(
+                  margin: EdgeInsets.only(left: 20,right: 20),
+                  alignment:Alignment.topLeft,
+                  child: FooterText(text: "state",onPressed: (){},clickable: false,),
+                ),
+                Container(
+                    margin: EdgeInsets.all(0),
+                    child: state),
+                Container(
+                  margin: EdgeInsets.only(left: 20,right: 20),
+                  alignment:Alignment.topLeft,
+                  child: FooterText(text: "street",onPressed: (){},clickable: false,),
+                ),
+                Container(
+                    margin: EdgeInsets.all(0),
+                    child: street),
+                Container(
+                  margin: EdgeInsets.only(left: 20,right: 20),
+                  alignment:Alignment.topLeft,
+                  child: FooterText(text: "building",onPressed: (){},clickable: false,),
+                ),
+                Container(
+                    margin: EdgeInsets.all(0),
+                    child: building),
                 MainButton(
                   text: "SAVE",onPressed: () async {
 

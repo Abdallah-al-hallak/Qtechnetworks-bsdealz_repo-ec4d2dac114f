@@ -56,7 +56,5 @@ class _BaseTextState extends State<BaseText> {
           child:Text(widget.text,style: TextStyle(color: widget.color,fontSize: widget.fontSize,fontWeight:widget.fontWeight,height: 0.9 ,fontStyle: widget.fontStyle),
           ));
     }
-
-
   }
 }

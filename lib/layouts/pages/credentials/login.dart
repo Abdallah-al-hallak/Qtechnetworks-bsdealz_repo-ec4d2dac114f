@@ -296,7 +296,7 @@ class LoginForm1State extends State<LoginForm1> {
     }).then((value) async {
       setState(() {
         if ((value.statusCode!) < 300) {
-          token = value.data["data"]["token"]["accessToken"];
+          token = value.data["data"]["token"];
           SharedFunc().setToken(token, 'token');
           log("token=${token}");
           ApiUser user = ApiUser.fromJson(value.data["data"]["user"]);

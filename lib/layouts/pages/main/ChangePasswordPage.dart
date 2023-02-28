@@ -53,7 +53,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               BackBar(
                 height: 60,
                 notificationsNumber: 0,
-                title: "Personal Details",
+                title: getTranslated(context, 'personalD'),
               ),
               Expanded(child: ChangePasswordForm()),
             ],

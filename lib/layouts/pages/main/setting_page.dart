@@ -144,10 +144,11 @@ class _SettingPageState extends State<SettingPage> {
                               child: Container(
                                 child: ListTile(
                                     title: SettingText(
-                                        text: "Personal details",
+                                        text:
+                                            getTranslated(context, 'personalD'),
                                         clickable: false,
                                         onPressed: () {}),
-                                    trailing: Icon(
+                                    trailing: const Icon(
                                       size: 20,
                                       Icons.arrow_forward_ios,
                                       color: Colors.grey,
@@ -177,18 +178,19 @@ class _SettingPageState extends State<SettingPage> {
                             ),
                             Container(
                               height: 1,
-                              margin: EdgeInsets.only(left: 20, right: 20),
+                              margin:
+                                  const EdgeInsets.only(left: 20, right: 20),
                               color: Colors.grey[300],
                             ),
                             InkWell(
                               onTap: () {},
-                              child: Container(
+                              child: SizedBox(
                                 child: ListTile(
                                     title: SettingText(
-                                        text: "My Wishlist",
+                                        text: getTranslated(context, 'Mywish'),
                                         clickable: false,
                                         onPressed: () {}),
-                                    trailing: Icon(
+                                    trailing: const Icon(
                                       size: 20,
                                       Icons.arrow_forward_ios,
                                       color: Colors.grey,
@@ -226,7 +228,8 @@ class _SettingPageState extends State<SettingPage> {
                               child: SizedBox(
                                 child: ListTile(
                                     title: SettingText(
-                                        text: "Saved cards/Payment methods",
+                                        text: getTranslated(
+                                            context, 'SavedCards'),
                                         clickable: false,
                                         onPressed: () {}),
                                     trailing: const Icon(
@@ -255,7 +258,8 @@ class _SettingPageState extends State<SettingPage> {
                               child: Container(
                                 child: ListTile(
                                     title: SettingText(
-                                        text: "Change password",
+                                        text: getTranslated(
+                                            context, 'changepasswod'),
                                         clickable: false,
                                         onPressed: () {}),
                                     trailing: Icon(
@@ -310,18 +314,20 @@ class _SettingPageState extends State<SettingPage> {
                             // ),
                             Container(
                               height: 1,
-                              margin: EdgeInsets.only(left: 20, right: 20),
+                              margin:
+                                  const EdgeInsets.only(left: 20, right: 20),
                               color: Colors.grey[300],
                             ),
                             InkWell(
                               onTap: () {},
-                              child: Container(
+                              child: SizedBox(
                                 child: ListTile(
                                     title: SettingText(
-                                        text: "My Wallet",
+                                        text:
+                                            getTranslated(context, 'MyWallet'),
                                         clickable: false,
                                         onPressed: () {}),
-                                    trailing: Icon(
+                                    trailing: const Icon(
                                       size: 20,
                                       Icons.arrow_forward_ios,
                                       color: Colors.grey,
@@ -367,7 +373,7 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                     /////////////////////////
                     Container(
-                      margin: EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(10),
                       child: Card(
                         elevation: 4,
                         shape: RoundedRectangleBorder(
@@ -381,16 +387,16 @@ class _SettingPageState extends State<SettingPage> {
                           children: [
                             InkWell(
                               onTap: () {},
-                              child: Container(
+                              child: SizedBox(
                                 child: InkWell(
                                   onTap: () {},
-                                  child: Container(
+                                  child: SizedBox(
                                     child: ListTile(
                                         title: SettingText(
-                                            text: "How it works",
+                                            text: getTranslated(context, 'how'),
                                             clickable: false,
                                             onPressed: () {}),
-                                        trailing: Icon(
+                                        trailing: const Icon(
                                           size: 20,
                                           Icons.arrow_forward_ios,
                                           color: Colors.grey,
@@ -471,12 +477,12 @@ class _SettingPageState extends State<SettingPage> {
                             ),
                             InkWell(
                               onTap: () {},
-                              child:  InkWell(
+                              child: InkWell(
                                 onTap: () {},
                                 child: Container(
                                   child: ListTile(
                                       title: SettingText(
-                                          text: "Our charity work",
+                                          text: getTranslated(context, 'our'),
                                           clickable: false,
                                           onPressed: () {}),
                                       trailing: Icon(
@@ -565,7 +571,8 @@ class _SettingPageState extends State<SettingPage> {
                               child: Container(
                                 child: ListTile(
                                     title: SettingText(
-                                        text: "Contact us",
+                                        text: getTranslated(
+                                            context, 'contact_us'),
                                         clickable: false,
                                         onPressed: () {}),
                                     trailing: Icon(

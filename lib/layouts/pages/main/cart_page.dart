@@ -331,7 +331,10 @@ class _CartPageState extends State<CartPage> {
           color: Colors.white,
           child: Column(
             children: [
-              BackBar(height: 50, title: "My cart", notificationsNumber: 0),
+              BackBar(
+                  height: 50,
+                  title: getTranslated(context, 'Mycart'),
+                  notificationsNumber: 0),
               Expanded(
                 child: ListView(
                   children: [

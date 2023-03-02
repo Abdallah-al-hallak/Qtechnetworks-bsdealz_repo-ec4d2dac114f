@@ -55,11 +55,15 @@ class _AddToCartButtonState extends State<AddToCartButton> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    RefreshApp.of(context)!.localCart.items!.forEach((element) {
+    for (var element in RefreshApp.of(context)!.localCart.items!) {
       if (element.campaign!.id == widget.campaign.id) {
         quantity = element.quantity!;
       }
-    });
+    }
+    RefreshApp.of(context)!
+        .localCart
+        .items!
+        .addAll(RefreshApp.of(context)!.apiAppVariables.cart!.items!);
 
     Widget addToCartWidget = Container(
       margin: const EdgeInsets.only(top: 20, bottom: 5),
@@ -101,26 +105,26 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                       Config.DISMISS_KEY,
                       Config.DISMISS_VALUE,
                     ),
-                    descriptions: "${AppSettingTheme.getTheme(
+                    descriptions: AppSettingTheme.getTheme(
                       context,
                       Config.PLEASE_LOGIN_KEY,
                       Config.PLEASE_LOGIN_VALUE,
-                    )}",
+                    ),
                     type: DialogType.ERROR,
                     customWidget: Button1(
                         onPressed: () {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Login(
+                                  builder: (context) => const Login(
                                         destination: '1',
                                       )));
                         },
-                        text: "${AppSettingTheme.getTheme(
+                        text: AppSettingTheme.getTheme(
                           context,
                           Config.LOGIN_KEY,
                           Config.LOGIN_VALUE,
-                        )}",
+                        ),
                         hasIcon: false,
                         color: Colors.red,
                         fontColor: Colors.white),
@@ -133,153 +137,151 @@ class _AddToCartButtonState extends State<AddToCartButton> {
     ShapeBorder shapeBorder1 = RoundedRectangleBorder(
         borderRadius: const BorderRadius.all(Radius.circular(9)),
         side: BorderSide(width: 1, color: Colors.grey[300]!));
-    if (RefreshApp.of(context)!.localCart != null) {
-      if (RefreshApp.of(context)!.localCart.items!.isNotEmpty) {
-        for (int i = 0;
-            i < RefreshApp.of(context)!.localCart.items!.length;
-            i++) {
-          if (RefreshApp.of(context)!
-                  .localCart
-                  .items!
-                  .elementAt(i)
-                  .campaign!
-                  .id ==
-              widget.campaign.id) {
-            addToCartWidget = Container(
-              margin: const EdgeInsets.only(left: 20, right: 20),
-              height: 60,
-              child: Card(
-                shape: shapeBorder1,
-                child: Container(
-                  width: MediaQuery.of(context).size.width - 20,
-                  margin: const EdgeInsets.only(left: 5, right: 5),
-                  alignment: Alignment.center,
-                  child: Row(
-                    children: [
-                      SizedBox(
-                          width: 50,
-                          child: BaseButton(
-                            isfilled: true,
-                            isGradient: true,
-                            isActive: true,
-                            iconColor: Colors.white,
-                            color: Theme.of(context).primaryColor,
-                            height: 55,
-                            text: "-",
-                            icon: Icons.home,
-                            textColor: HexColor(AppSettingTheme.getTheme(
-                              context,
-                              Config.MAIN_BUTTON_TEXT_COLOR_KEY,
-                              Config.MAIN_BUTTON_TEXT_COLOR_VALUE,
-                            )),
-                            padding: 5,
-                            iconpadding: 5,
-                            margin: 0,
-                            radius: 9,
-                            fontSize: 30,
-                            ovalpadding: 4,
-                            onPressed: () {
-                              quantity = quantity - 1;
-                              updateLocally1(false);
-                              updateLocally(false);
-                            },
-                            width: 50,
-                            startColor: HexColor(AppSettingTheme.getTheme(
-                              context,
-                              Config.MAIN_BUTTON_START_COLOR_KEY,
-                              Config.MAIN_BUTTON_START_COLOR_VALUE,
-                            )),
-                            endColor: HexColor(AppSettingTheme.getTheme(
-                              context,
-                              Config.MAIN_BUTTON_END_COLOR_KEY,
-                              Config.MAIN_BUTTON_END_COLOR_VALUE,
-                            )),
-                          )),
-                      Expanded(
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: BaseText(
-                            color: Colors.black,
-                            // text:RefreshApp.of(context)!.apiAppVariables!.cart!.items!.elementAt(i).quantity!.toString(),
-                            text: quantity.toString(),
-                            margin: 0,
-                            marginh: 5,
-                            fontSize: 15,
-                            onPressed: () {},
-                            fontWeight: FontWeight.bold, clickable: false,
-                          ),
-                        ),
-                      ),
-                      BaseButton(
-                        isfilled: true,
-                        isGradient: true,
-                        isActive: true,
-                        iconColor: Colors.white,
-                        color: Theme.of(context).primaryColor,
-                        height: 55,
-                        text: "+",
-                        icon: Icons.home,
-                        textColor: HexColor(AppSettingTheme.getTheme(
-                          context,
-                          Config.MAIN_BUTTON_TEXT_COLOR_KEY,
-                          Config.MAIN_BUTTON_TEXT_COLOR_VALUE,
-                        )),
-                        padding: 5,
-                        iconpadding: 5,
-                        margin: 0,
-                        radius: 9,
-                        fontSize: 30,
-                        ovalpadding: 4,
-                        onPressed: () {
-                          if (widget.campaign.quantity! -
-                                  widget.campaign.sold! >
-                              quantity) {
-                            quantity = quantity + 1;
-                            updateLocally1(true);
-                            updateLocally(true);
-                          } else {
-                            MainDialog.showMyDialog(
-                                MainDialog(
-                                  title: "Failed to add",
-                                  text: "can't add more, all sold out",
-                                  descriptions: "can't add more, all sold out",
-                                  type: DialogType.ERROR,
-                                  customWidget: Container(),
-                                ),
-                                context);
-                          }
-                        },
+
+    if (RefreshApp.of(context)!.localCart.items!.isNotEmpty) {
+      for (int i = 0;
+          i < RefreshApp.of(context)!.localCart.items!.length;
+          i++) {
+        if (RefreshApp.of(context)!
+                .localCart
+                .items!
+                .elementAt(i)
+                .campaign!
+                .id ==
+            widget.campaign.id) {
+          addToCartWidget = Container(
+            margin: const EdgeInsets.only(left: 20, right: 20),
+            height: 60,
+            child: Card(
+              shape: shapeBorder1,
+              child: Container(
+                width: MediaQuery.of(context).size.width - 20,
+                margin: const EdgeInsets.only(left: 5, right: 5),
+                alignment: Alignment.center,
+                child: Row(
+                  children: [
+                    SizedBox(
                         width: 50,
-                        startColor: HexColor(AppSettingTheme.getTheme(
-                          context,
-                          Config.MAIN_BUTTON_START_COLOR_KEY,
-                          Config.MAIN_BUTTON_START_COLOR_VALUE,
-                        )),
-                        endColor: HexColor(AppSettingTheme.getTheme(
-                          context,
-                          Config.MAIN_BUTTON_END_COLOR_KEY,
-                          Config.MAIN_BUTTON_END_COLOR_VALUE,
-                        )),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
-                        child: AddMoreBtn(
+                        child: BaseButton(
+                          isfilled: true,
+                          isGradient: true,
                           isActive: true,
+                          iconColor: Colors.white,
+                          color: Theme.of(context).primaryColor,
+                          height: 55,
+                          text: "-",
+                          icon: Icons.home,
+                          textColor: HexColor(AppSettingTheme.getTheme(
+                            context,
+                            Config.MAIN_BUTTON_TEXT_COLOR_KEY,
+                            Config.MAIN_BUTTON_TEXT_COLOR_VALUE,
+                          )),
+                          padding: 5,
+                          iconpadding: 5,
+                          margin: 0,
+                          radius: 9,
+                          fontSize: 30,
+                          ovalpadding: 4,
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CartPage()));
+                            quantity = quantity - 1;
+                            updateLocally1(false);
+                            updateLocally(false);
                           },
-                          text: getTranslated(context, 'cart'),
+                          width: 50,
+                          startColor: HexColor(AppSettingTheme.getTheme(
+                            context,
+                            Config.MAIN_BUTTON_START_COLOR_KEY,
+                            Config.MAIN_BUTTON_START_COLOR_VALUE,
+                          )),
+                          endColor: HexColor(AppSettingTheme.getTheme(
+                            context,
+                            Config.MAIN_BUTTON_END_COLOR_KEY,
+                            Config.MAIN_BUTTON_END_COLOR_VALUE,
+                          )),
+                        )),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: BaseText(
+                          color: Colors.black,
+                          // text:RefreshApp.of(context)!.apiAppVariables!.cart!.items!.elementAt(i).quantity!.toString(),
+                          text: quantity.toString(),
+                          margin: 0,
+                          marginh: 5,
+                          fontSize: 15,
+                          onPressed: () {},
+                          fontWeight: FontWeight.bold, clickable: false,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    BaseButton(
+                      isfilled: true,
+                      isGradient: true,
+                      isActive: true,
+                      iconColor: Colors.white,
+                      color: Theme.of(context).primaryColor,
+                      height: 55,
+                      text: "+",
+                      icon: Icons.home,
+                      textColor: HexColor(AppSettingTheme.getTheme(
+                        context,
+                        Config.MAIN_BUTTON_TEXT_COLOR_KEY,
+                        Config.MAIN_BUTTON_TEXT_COLOR_VALUE,
+                      )),
+                      padding: 5,
+                      iconpadding: 5,
+                      margin: 0,
+                      radius: 9,
+                      fontSize: 30,
+                      ovalpadding: 4,
+                      onPressed: () {
+                        if (widget.campaign.quantity! - widget.campaign.sold! >
+                            quantity) {
+                          quantity = quantity + 1;
+                          updateLocally1(true);
+                          updateLocally(true);
+                        } else {
+                          MainDialog.showMyDialog(
+                              MainDialog(
+                                title: "Failed to add",
+                                text: "can't add more, all sold out",
+                                descriptions: "can't add more, all sold out",
+                                type: DialogType.ERROR,
+                                customWidget: Container(),
+                              ),
+                              context);
+                        }
+                      },
+                      width: 50,
+                      startColor: HexColor(AppSettingTheme.getTheme(
+                        context,
+                        Config.MAIN_BUTTON_START_COLOR_KEY,
+                        Config.MAIN_BUTTON_START_COLOR_VALUE,
+                      )),
+                      endColor: HexColor(AppSettingTheme.getTheme(
+                        context,
+                        Config.MAIN_BUTTON_END_COLOR_KEY,
+                        Config.MAIN_BUTTON_END_COLOR_VALUE,
+                      )),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      child: AddMoreBtn(
+                        isActive: true,
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CartPage()));
+                        },
+                        text: getTranslated(context, 'cart'),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            );
-          }
+            ),
+          );
         }
       }
     }

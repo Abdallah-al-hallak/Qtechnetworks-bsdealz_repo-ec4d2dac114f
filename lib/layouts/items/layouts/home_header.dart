@@ -79,11 +79,11 @@ class CustomHeaderItemState extends State<CustomHeaderItem> {
     int sum = 0;
 
     Widget cartWidget = Container(
-      padding: EdgeInsets.all(0),
+      padding: const EdgeInsets.all(0),
       child: AppIcon(icon: AppIcon.CART_PATH, size: 20),
     );
-    if (RefreshApp.of(context)!.apiAppVariables!.cart != null) {
-      if (RefreshApp.of(context)!.apiAppVariables!.cart!.items!.isNotEmpty) {
+    if (RefreshApp.of(context)!.apiAppVariables.cart != null) {
+      if (RefreshApp.of(context)!.apiAppVariables.cart!.items!.isNotEmpty) {
         RefreshApp.of(context)!.apiAppVariables.cart!.items!.forEach((element) {
           sum = sum + element.quantity!;
         });
@@ -138,26 +138,26 @@ class CustomHeaderItemState extends State<CustomHeaderItem> {
                                   Config.DISMISS_KEY,
                                   Config.DISMISS_VALUE,
                                 )}",
-                                descriptions: "${AppSettingTheme.getTheme(
+                                descriptions: AppSettingTheme.getTheme(
                                   context,
                                   Config.PLEASE_LOGIN_KEY,
                                   Config.PLEASE_LOGIN_VALUE,
-                                )}",
+                                ),
                                 type: DialogType.ERROR,
                                 customWidget: Button1(
                                     onPressed: () {
                                       Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => Login(
+                                              builder: (context) => const Login(
                                                     destination: '1',
                                                   )));
                                     },
-                                    text: "${AppSettingTheme.getTheme(
+                                    text: AppSettingTheme.getTheme(
                                       context,
                                       Config.LOGIN_KEY,
                                       Config.LOGIN_VALUE,
-                                    )}",
+                                    ),
                                     hasIcon: false,
                                     color: Colors.red,
                                     fontColor: Colors.white),
@@ -166,18 +166,18 @@ class CustomHeaderItemState extends State<CustomHeaderItem> {
                         }
                       },
                       child: Container(
-                        padding: EdgeInsets.all(0),
+                        padding: const EdgeInsets.all(0),
                         child: AppIcon(icon: AppIcon.PERSON_PATH, size: 20),
                       ))),
               Expanded(flex: 3, child: Container()),
               Expanded(
                   flex: 1,
                   child: Container(
-                    padding: EdgeInsets.all(0),
+                    padding: const EdgeInsets.all(0),
                     child: AppIcon(icon: AppIcon.LOGO_PATH, size: 40),
                   )),
               Expanded(flex: 1, child: Container()),
-              Expanded(
+              const Expanded(
                   flex: 2,
                   child: LanguageIndicator(
                     height: 40,
@@ -190,7 +190,7 @@ class CustomHeaderItemState extends State<CustomHeaderItem> {
                           RefreshApp.of(context)!.localCart.items!.clear();
                           RefreshApp.of(context)!.activeCampaignWidgets.clear();
                           RefreshApp.of(context)!
-                              .apiAppVariables!
+                              .apiAppVariables
                               .activeCampaigns!
                               .forEach((element) {
                             if (kIsWeb) {
@@ -219,16 +219,16 @@ class CustomHeaderItemState extends State<CustomHeaderItem> {
                         } else {
                           MainDialog.showMyDialog(
                               MainDialog(
-                                title: "${AppSettingTheme.getTheme(
+                                title: AppSettingTheme.getTheme(
                                   context,
                                   Config.FAILED_KEY,
                                   Config.FAILED_VALUE,
-                                )}",
-                                text: "${AppSettingTheme.getTheme(
+                                ),
+                                text: AppSettingTheme.getTheme(
                                   context,
                                   Config.DISMISS_KEY,
                                   Config.DISMISS_VALUE,
-                                )}",
+                                ),
                                 descriptions: "${AppSettingTheme.getTheme(
                                   context,
                                   Config.PLEASE_LOGIN_KEY,

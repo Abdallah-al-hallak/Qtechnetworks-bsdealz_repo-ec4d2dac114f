@@ -1,17 +1,12 @@
-import 'dart:convert';
-
 import 'package:bsdealz/layouts/items/buttons/MainButton.dart';
 import 'package:bsdealz/layouts/items/texts/FooterText.dart';
 import 'package:bsdealz/layouts/items/texts/SettingText.dart';
-import 'package:bsdealz/network/models/APIAppVariables.dart';
 import 'package:bsdealz/network/models/APICart.dart';
 import 'package:bsdealz/network/models/APICartItem.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
 import '../../../localization/language_constants.dart';
 import '../../../main.dart';
 import '../../../network/HttpAPI.dart';
@@ -24,10 +19,7 @@ import '../../dialogs/web_dialog.dart';
 import '../../items/buttons/BaseButton.dart';
 import '../../items/buttons/MiniButton.dart';
 import '../../items/icons/AppIcon.dart';
-import '../../items/lists/campaign_item.dart';
 import '../../items/lists/cart_item.dart';
-import '../../items/lists/web/campaign_item_web.dart';
-import '../../items/textboxes/CustomTextbox.dart';
 import '../../items/texts/BaseText.dart';
 import '../../items/texts/TitleText.dart';
 import '../../items/tobars/back_bar.dart';
@@ -254,7 +246,7 @@ class _CartPageState extends State<CartPage> {
                         "${RefreshApp.of(context)!.apiAppVariables.cart!.promoCodeDiscount}",
                     clickable: false,
                     onPressed: () {})),
-            leading: Container(
+            leading: SizedBox(
                 height: 20,
                 child: FooterText(
                     text: getTranslated(context, 'promo'),
@@ -284,19 +276,19 @@ class _CartPageState extends State<CartPage> {
     if (usePoints) {
       myWalletTile = Container(
         height: 20,
-        margin: EdgeInsets.only(left: 5, right: 5),
+        margin: const EdgeInsets.only(left: 5, right: 5),
         alignment: Alignment.center,
         child: ListTile(
             tileColor: Colors.grey[100],
             title: Container(),
-            trailing: Container(
+            trailing: SizedBox(
                 height: 20,
                 child: FooterText(
                     text:
                         "${RefreshApp.of(context)!.apiAppVariables.cart!.pointsDiscount}",
                     clickable: false,
                     onPressed: () {})),
-            leading: Container(
+            leading: SizedBox(
                 height: 20,
                 child: FooterText(
                     text: getTranslated(context, 'MyWallet'),

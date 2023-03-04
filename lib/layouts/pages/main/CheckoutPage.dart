@@ -1,24 +1,13 @@
 import 'package:bsdealz/layouts/dialogs/main_dialog.dart';
-import 'package:bsdealz/layouts/items/buttons/MainButton.dart';
 import 'package:bsdealz/layouts/items/texts/FooterText.dart';
-import 'package:bsdealz/layouts/items/texts/SettingText.dart';
-import 'package:bsdealz/layouts/items/texts/SubTitleText.dart';
-import 'package:bsdealz/layouts/pages/main/cart_page.dart';
 import 'package:bsdealz/layouts/pages/main/home_page.dart';
-import 'package:bsdealz/network/models/APIAppVariables.dart';
-import 'package:bsdealz/network/models/APICart.dart';
-import 'package:bsdealz/network/models/APICartItem.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
 import '../../../localization/language_constants.dart';
-import '../../../main.dart';
 import '../../../network/HttpAPI.dart';
 import '../../../network/models/APIOrder.dart';
-import '../../../network/models/APIUser.dart';
 import '../../../network/models/ApiAddress.dart';
 import '../../../utils/Config.dart';
 import '../../../utils/GetSettingByKey.dart';
@@ -26,19 +15,14 @@ import '../../../utils/inherited/refresh_app_state.dart';
 import '../../../utils/sharedprefs.dart';
 import '../../dialogs/web_dialog.dart';
 import '../../items/buttons/BaseButton.dart';
-import '../../items/buttons/MiniButton.dart';
-import '../../items/icons/AppIcon.dart';
 import '../../items/lists/address_item.dart';
-import '../../items/lists/cart_item.dart';
-import '../../items/textboxes/CustomTextbox.dart';
 import '../../items/texts/BaseText.dart';
-import '../../items/texts/TitleText.dart';
 import '../../items/tobars/back_bar.dart';
 import 'AddAddress.dart';
 import 'Invoice.dart';
 
 class CheckoutPage extends StatefulWidget {
-  static ApiAddress selectedAddress = new ApiAddress(
+  static ApiAddress selectedAddress = ApiAddress(
       address: "",
       apartmentNumber: "",
       state: "",
@@ -119,8 +103,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 MaterialPageRoute(builder: (context) => InvoicePage()));
             MainDialog.showMyDialog(
                 MainDialog(
-                    title: "Order success",
-                    descriptions: "Start Shopping",
+                    title: getTranslated(context, 'order'),
+                    descriptions: getTranslated(context, 'startSh'),
                     text: "",
                     type: DialogType.SUCCESS,
                     customWidget: Container()),
@@ -131,8 +115,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
         EasyLoading.dismiss();
         MainDialog.showMyDialog(
             MainDialog(
-                title: "Checkout failed",
-                descriptions: "Retry later",
+                title: getTranslated(context, 'check'),
+                descriptions: getTranslated(context, 'retry'),
                 text: "",
                 type: DialogType.ERROR,
                 customWidget: Container()),
@@ -145,7 +129,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Widget build(BuildContext context) {
     RefreshApp.of(context)!.addressesWidgets.clear();
     int i = 0;
-    RefreshApp.of(context)!.apiAppVariables!.addresses!.forEach((element) {
+    RefreshApp.of(context)!.apiAppVariables.addresses!.forEach((element) {
       if (i == 0 && CheckoutPage.selectedId == -1) {
         CheckoutPage.selectedAddress = element;
         CheckoutPage.selectedId = element.id;
@@ -182,7 +166,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     });
     Widget promoCodeWidget = Container(
       height: 25,
-      margin: EdgeInsets.only(left: 5, right: 5),
+      margin: const EdgeInsets.only(left: 5, right: 5),
       alignment: Alignment.center,
       child: ListTile(
           tileColor: Colors.grey[100],
@@ -197,7 +181,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
           leading: Container(
               height: 20,
               child: FooterText(
-                  text: "Promo code discount",
+                  text: getTranslated(context, 'promo'),
                   clickable: false,
                   onPressed: () {})),
           onTap: () {
@@ -221,7 +205,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
       child: BaseText(
         color: Color(0XFF707070),
         margin: 0,
-        text: "+Add address",
+        text: getTranslated(context, 'address'),
         marginh: 35,
         fontSize: 10,
         onPressed: () {
@@ -229,7 +213,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
             WebDialog.showMyDialog(
                 WebDialog(
                   title: "",
-                  text: "Dismiss",
+                  text: getTranslated(context, 'Dis'),
                   descriptions: "",
                   customWidget: AddAddress(),
                 ),
@@ -244,7 +228,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
       ),
     );
     if (!donationOn) {
-      List<Widget> addressLayiout = RefreshApp.of(context)!.addressesWidgets!;
+      List<Widget> addressLayiout = RefreshApp.of(context)!.addressesWidgets;
       addressLayiout.add(newAddress);
       addressWidget = Wrap(
         children: addressLayiout,
@@ -255,19 +239,19 @@ class _CheckoutPageState extends State<CheckoutPage> {
     if (usePoints) {
       myWalletTile = Container(
         height: 20,
-        margin: EdgeInsets.only(left: 5, right: 5),
+        margin: const EdgeInsets.only(left: 5, right: 5),
         alignment: Alignment.center,
         child: ListTile(
             tileColor: Colors.grey[100],
             title: Container(),
-            trailing: Container(
+            trailing: SizedBox(
                 height: 20,
                 child: FooterText(
                     text:
                         "${RefreshApp.of(context)!.apiAppVariables.cart!.pointsDiscount}",
                     clickable: false,
                     onPressed: () {})),
-            leading: Container(
+            leading: SizedBox(
                 height: 20,
                 child: FooterText(
                     text: getTranslated(context, 'MyWallet'),
@@ -286,11 +270,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
       pointsToSubtract = Container(
         height: 20,
-        margin: EdgeInsets.only(left: 30, right: 30, top: 20),
+        margin: const EdgeInsets.only(left: 30, right: 30, top: 20),
         alignment: Alignment.topLeft,
         child: Text(
           "*You will use ${RefreshApp.of(context)!.apiAppVariables.cart!.pointsToSubtract} points",
-          style: TextStyle(color: Colors.red, fontSize: 9),
+          style: const TextStyle(color: Colors.red, fontSize: 9),
         ),
       );
     }
@@ -346,7 +330,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 leading: Container(
                                     height: 20,
                                     child: FooterText(
-                                        text: "SubTotal",
+                                        text:
+                                            getTranslated(context, 'subtotal'),
                                         clickable: false,
                                         onPressed: () {})),
                                 onTap: () {
@@ -362,12 +347,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
                           Container(
                             height: 20,
-                            margin: EdgeInsets.only(left: 5, right: 5),
+                            margin: const EdgeInsets.only(left: 5, right: 5),
                             alignment: Alignment.center,
                             child: ListTile(
                                 tileColor: Colors.grey[100],
                                 title: Container(),
-                                trailing: Container(
+                                trailing: SizedBox(
                                     height: 20,
                                     child: FooterText(
                                         text: "-",
@@ -376,7 +361,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 leading: Container(
                                     height: 20,
                                     child: FooterText(
-                                        text: "Shipping fees",
+                                        text:
+                                            getTranslated(context, 'shipping'),
                                         clickable: false,
                                         onPressed: () {})),
                                 onTap: () {
@@ -405,25 +391,25 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           // ),
                           myWalletTile,
 
-                          Container(height: 40, child: pointsToSubtract),
+                          SizedBox(height: 40, child: pointsToSubtract),
 
                           Column(
                             children: [
                               Container(
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                     top: 0, bottom: 1, right: 10, left: 10),
                                 height: 1,
                                 color: Colors.grey[300],
                               ),
                               Container(
                                 height: 20,
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                     left: 5, right: 5, bottom: 20),
                                 alignment: Alignment.topCenter,
                                 child: ListTile(
                                     tileColor: Colors.grey[100],
                                     title: Container(),
-                                    trailing: Container(
+                                    trailing: SizedBox(
                                         height: 20,
                                         child: FooterText(
                                             text:
@@ -433,7 +419,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                     leading: Container(
                                         height: 20,
                                         child: FooterText(
-                                            text: "Total amount",
+                                            text:
+                                                getTranslated(context, 'total'),
                                             clickable: false,
                                             onPressed: () {})),
                                     onTap: () {}),
@@ -473,9 +460,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                   } else {
                                     MainDialog.showMyDialog(
                                         MainDialog(
-                                            title: "Can't complete order",
-                                            descriptions:
-                                                "Add address first please",
+                                            title: getTranslated(
+                                                context, 'cantComplete'),
+                                            descriptions: getTranslated(
+                                                context, 'address'),
                                             text: "",
                                             type: DialogType.WARNING,
                                             customWidget: Container()),

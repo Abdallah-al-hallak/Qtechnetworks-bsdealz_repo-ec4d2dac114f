@@ -9,6 +9,7 @@ import 'package:bsdealz/layouts/items/textboxes/TextboxPassword.dart';
 import 'package:bsdealz/layouts/items/textboxes/TextboxPhone.dart';
 import 'package:bsdealz/layouts/items/tobars/back_bar.dart';
 import 'package:bsdealz/layouts/pages/credentials/login.dart';
+import 'package:bsdealz/localization/language_constants.dart';
 import 'package:bsdealz/network/HttpAPI.dart';
 import 'package:bsdealz/utils/inherited/refresh_app_state.dart';
 import 'package:dio/dio.dart';
@@ -154,7 +155,10 @@ class AddressFormState extends State<AddressForm> {
     return Form(
         key: _formKey,
         child: ListView(children: <Widget>[
-          BackBar(height: 60, title: "Add address", notificationsNumber: 0),
+          BackBar(
+              height: 60,
+              title: getTranslated(context, 'address'),
+              notificationsNumber: 0),
           Container(margin: const EdgeInsets.all(10), child: nameet),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 30),
@@ -197,7 +201,7 @@ class AddressFormState extends State<AddressForm> {
             height: 20,
           ),
           MainButton(
-            text: "SAVE",
+            text: getTranslated(context, 'save'),
             onPressed: () async {
               EasyLoading.show();
               if (validateForm([nameet, street, building], [])) {
@@ -218,8 +222,8 @@ class AddressFormState extends State<AddressForm> {
     if (cityValue == "" || cityValue == null) {
       MainDialog.showMyDialog(
           MainDialog(
-              title: "Add address failed",
-              descriptions: "Select city please",
+              title: getTranslated(context, 'addressfailed'),
+              descriptions: getTranslated(context, 'city'),
               text: "",
               type: DialogType.ERROR,
               customWidget: Container()),
@@ -251,8 +255,8 @@ class AddressFormState extends State<AddressForm> {
       } else {
         MainDialog.showMyDialog(
             MainDialog(
-                title: "Add Address failed",
-                descriptions: "Add Address Error",
+                title: getTranslated(context, 'addressfailed'),
+                descriptions: getTranslated(context, 'addressfailed'),
                 text: "",
                 type: DialogType.ERROR,
                 customWidget: Container()),
@@ -264,7 +268,7 @@ class AddressFormState extends State<AddressForm> {
       log(error.toString());
       MainDialog.showMyDialog(
           MainDialog(
-              title: "Add Address failed",
+              title: getTranslated(context, 'addressfailed'),
               descriptions: error.toString(),
               text: "",
               type: DialogType.ERROR,
@@ -284,7 +288,7 @@ class AddressFormState extends State<AddressForm> {
           MainDialog.showMyDialog(
               MainDialog(
                 title: currentEdittext.text.toString(),
-                text: "Dismiss",
+                text: getTranslated(context, 'Dis'),
                 descriptions: v,
                 type: DialogType.ERROR,
                 customWidget: Container(),
@@ -313,7 +317,7 @@ class AddressFormState extends State<AddressForm> {
         MainDialog.showMyDialog(
             MainDialog(
               title: currentEdittext.text.toString(),
-              text: "Dismiss",
+              text: getTranslated(context, 'Dis'),
               descriptions: v,
               type: DialogType.ERROR,
               customWidget: Container(),

@@ -66,14 +66,13 @@ class _AddToCartButtonState extends State<AddToCartButton> {
         .addAll(RefreshApp.of(context)!.apiAppVariables.cart!.items!);
 
     Widget addToCartWidget = Container(
-      margin: const EdgeInsets.only(top: 20, bottom: 5),
+      margin: const EdgeInsets.only(
+        top: 20,
+        bottom: 5,
+      ),
       alignment: Alignment.bottomCenter,
       child: MiniButton(
-          text: AppSettingTheme.getTheme(
-            context,
-            Config.ADD_TO_CART_KEY,
-            Config.ADD_TO_CART_VALUE,
-          ),
+          text: getTranslated(context, 'add_to_cart'),
           onPressed: () {
             if (RefreshApp.of(context)!.isLogin) {
               if (widget.campaign.quantity! - widget.campaign.sold! >= 1 &&
@@ -84,9 +83,9 @@ class _AddToCartButtonState extends State<AddToCartButton> {
               } else {
                 MainDialog.showMyDialog(
                     MainDialog(
-                      title: "Failed to add",
-                      text: "can't add more, not active campaign",
-                      descriptions: "can't add more, not active campaign",
+                      title: getTranslated(context, 'failed'),
+                      text: getTranslated(context, 'CantAdd'),
+                      descriptions: getTranslated(context, 'CantAdd'),
                       type: DialogType.ERROR,
                       customWidget: Container(),
                     ),
@@ -243,9 +242,9 @@ class _AddToCartButtonState extends State<AddToCartButton> {
                         } else {
                           MainDialog.showMyDialog(
                               MainDialog(
-                                title: "Failed to add",
-                                text: "can't add more, all sold out",
-                                descriptions: "can't add more, all sold out",
+                                title: getTranslated(context, 'Failed'),
+                                text: getTranslated(context, 'soldOut'),
+                                descriptions: getTranslated(context, 'soldOut'),
                                 type: DialogType.ERROR,
                                 customWidget: Container(),
                               ),

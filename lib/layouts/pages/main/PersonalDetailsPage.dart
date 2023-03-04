@@ -9,9 +9,9 @@ import 'package:bsdealz/network/HttpAPI.dart';
 import 'package:bsdealz/network/models/APIUser.dart';
 import 'package:bsdealz/utils/inherited/refresh_app_state.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';

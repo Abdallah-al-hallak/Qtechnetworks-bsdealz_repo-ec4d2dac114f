@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class BaseButton extends StatelessWidget  implements PreferredSizeWidget{
-  final double height,width;
+class BaseButton extends StatelessWidget implements PreferredSizeWidget {
+  final double height, width;
   final IconData icon;
   final String text;
   final Color color;
@@ -10,7 +10,7 @@ class BaseButton extends StatelessWidget  implements PreferredSizeWidget{
   final Color iconColor;
   final Color textColor;
   final double fontSize;
-  final double radius,padding,margin,iconpadding,ovalpadding;
+  final double radius, padding, margin, iconpadding, ovalpadding;
   final VoidCallback onPressed;
   final bool isGradient;
   final bool isfilled;
@@ -36,48 +36,48 @@ class BaseButton extends StatelessWidget  implements PreferredSizeWidget{
     required this.isfilled,
     required this.isActive,
     required this.onPressed,
-  }): super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     BoxDecoration cDecoration;
-    ShapeBorder shapeBorder1=RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(19.0)),
-       side: BorderSide(width: 0.0, color: Colors.grey[700]!),
-
+    ShapeBorder shapeBorder1 = RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(19.0)),
+      side: BorderSide(width: 0.0, color: Colors.grey[700]!),
     );
-    Color s=startColor;
-    Color e=endColor;
-    Color tcolor=textColor;
-    if(!isActive){
-      s=iconColor;
-      e=iconColor;
-      tcolor=Color(0XFF313131);
-    }else{
-       s=startColor;
-       e=endColor;
-       tcolor=textColor;
+    Color s = startColor;
+    Color e = endColor;
+    Color tcolor = textColor;
+    if (!isActive) {
+      s = iconColor;
+      e = iconColor;
+      tcolor = Color(0XFF313131);
+    } else {
+      s = startColor;
+      e = endColor;
+      tcolor = textColor;
     }
-    Widget button2=Container(
+    Widget button2 = Container(
         width: width,
         height: height,
-        margin:EdgeInsets.all(margin),
-        child:MaterialButton(
+        margin: EdgeInsets.all(margin),
+        child: MaterialButton(
           onPressed: onPressed,
-         // shape: shapeBorder1,
+          // shape: shapeBorder1,
           padding: EdgeInsets.only(bottom: 3.0),
           child: Ink(
             decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [s, e],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-                borderRadius: BorderRadius.circular(this.radius),
-              boxShadow: [
+              gradient: LinearGradient(
+                colors: [s, e],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              borderRadius: BorderRadius.circular(this.radius),
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.grey,
-                  blurRadius:2,
-                  offset: Offset(0,3), // Shadow position
+                  blurRadius: 2,
+                  offset: Offset(0, 3), // Shadow position
                 ),
               ],
             ),
@@ -85,17 +85,19 @@ class BaseButton extends StatelessWidget  implements PreferredSizeWidget{
               constraints: BoxConstraints(maxWidth: width, minHeight: height),
               alignment: Alignment.center,
               child: Center(
-                child: Text(text,
+                child: Text(
+                  text,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: fontSize,
+                  style: TextStyle(
+                    fontSize: fontSize,
                     fontWeight: FontWeight.bold,
-                    color: tcolor,),
+                    color: tcolor,
+                  ),
                 ),
               ),
             ),
           ),
         ));
-
 
     // Container(
     //     margin:EdgeInsets.all(margin) ,
@@ -130,17 +132,18 @@ class BaseButton extends StatelessWidget  implements PreferredSizeWidget{
     //
     //
     //     ));
-    if(!isfilled) {
-
-      button2=Container(
-        padding: EdgeInsets.only(left: 7,right: 7),
+    if (!isfilled) {
+      button2 = Container(
+        padding: const EdgeInsets.only(left: 7, right: 7),
         child: Card(
           elevation: 8.0,
           shape: shapeBorder1,
           child: Center(
-            child: Text( text,
+            child: Text(
+              text,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: fontSize,
+              style: TextStyle(
+                fontSize: fontSize,
                 fontWeight: FontWeight.bold,
               ),
             ),

@@ -5,17 +5,11 @@ import 'package:bsdealz/layouts/items/texts/SubTitleText.dart';
 import 'package:bsdealz/layouts/pages/main/ChangePasswordPage.dart';
 import 'package:bsdealz/layouts/pages/main/how_it_works.dart';
 import 'package:bsdealz/layouts/pages/main/our_charity_work.dart';
-import 'package:bsdealz/layouts/pages/main/splash.dart';
 import 'package:bsdealz/localization/language_constants.dart';
 import 'package:bsdealz/main.dart';
-import 'package:bsdealz/network/models/APIHeaders.dart';
-import 'package:bsdealz/network/models/APIUser.dart';
 import 'package:bsdealz/utils/inherited/refresh_app_state.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../../../localization/localization.dart';
-import '../../../network/HttpAPI.dart';
 import '../../../utils/shared_func.dart';
 import '../../../utils/sharedprefs.dart';
 import '../../dialogs/web_dialog.dart';
@@ -26,7 +20,6 @@ import '../../items/texts/TitleText.dart';
 import '../../items/tobars/back_bar.dart';
 import '../credentials/login.dart';
 import 'ContactUsPage.dart';
-import 'ContentWebView.dart';
 import 'PersonalDetailsPage.dart';
 import 'WalletPage.dart';
 import 'WishListPage.dart';
@@ -65,7 +58,7 @@ class _SettingPageState extends State<SettingPage> {
     super.initState();
   }
 
-  ShapeBorder shapeBorder1 = RoundedRectangleBorder(
+  ShapeBorder shapeBorder1 = const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(20)),
       side: BorderSide(width: 0, color: Color(0XFF707070)));
   @override
@@ -96,7 +89,7 @@ class _SettingPageState extends State<SettingPage> {
                           clickable: false,
                         )),
                     Container(
-                        margin: EdgeInsets.all(5),
+                        margin: const EdgeInsets.all(5),
                         alignment: Alignment.center,
                         child: SubTitleText(
                           text: RefreshApp.of(context)!
@@ -158,7 +151,8 @@ class _SettingPageState extends State<SettingPage> {
                                         WebDialog.showMyDialog(
                                             WebDialog(
                                               title: "",
-                                              text: "Dismiss",
+                                              text:
+                                                  getTranslated(context, 'Dis'),
                                               descriptions: "",
                                               customWidget:
                                                   PersonalDetailsPage(),
@@ -200,7 +194,8 @@ class _SettingPageState extends State<SettingPage> {
                                         WebDialog.showMyDialog(
                                             WebDialog(
                                               title: "",
-                                              text: "Dismiss",
+                                              text:
+                                                  getTranslated(context, 'Dis'),
                                               descriptions: "",
                                               customWidget: WishListPage(),
                                             ),
@@ -272,7 +267,8 @@ class _SettingPageState extends State<SettingPage> {
                                         WebDialog.showMyDialog(
                                             WebDialog(
                                               title: "",
-                                              text: "Dismiss",
+                                              text:
+                                                  getTranslated(context, 'Dis'),
                                               descriptions: "",
                                               customWidget:
                                                   ChangePasswordPage(),
@@ -337,7 +333,8 @@ class _SettingPageState extends State<SettingPage> {
                                         WebDialog.showMyDialog(
                                             WebDialog(
                                               title: "",
-                                              text: "Dismiss",
+                                              text:
+                                                  getTranslated(context, 'Dis'),
                                               descriptions: "",
                                               customWidget: WalletPage(),
                                             ),
@@ -406,7 +403,8 @@ class _SettingPageState extends State<SettingPage> {
                                             WebDialog.showMyDialog(
                                                 WebDialog(
                                                   title: "",
-                                                  text: "Dismiss",
+                                                  text: getTranslated(
+                                                      context, 'Dis'),
                                                   descriptions: "",
                                                   customWidget: HowItWorks(),
                                                 ),
@@ -472,7 +470,8 @@ class _SettingPageState extends State<SettingPage> {
                             ),
                             Container(
                               height: 1,
-                              margin: EdgeInsets.only(left: 20, right: 20),
+                              margin:
+                                  const EdgeInsets.only(left: 20, right: 20),
                               color: Colors.grey[300],
                             ),
                             InkWell(
@@ -485,7 +484,7 @@ class _SettingPageState extends State<SettingPage> {
                                           text: getTranslated(context, 'our'),
                                           clickable: false,
                                           onPressed: () {}),
-                                      trailing: Icon(
+                                      trailing: const Icon(
                                         size: 20,
                                         Icons.arrow_forward_ios,
                                         color: Colors.grey,
@@ -495,7 +494,8 @@ class _SettingPageState extends State<SettingPage> {
                                           WebDialog.showMyDialog(
                                               WebDialog(
                                                 title: "",
-                                                text: "Dismiss",
+                                                text: getTranslated(
+                                                    context, 'Dis'),
                                                 descriptions: "",
                                                 customWidget: OurCharity(),
                                               ),
@@ -575,7 +575,7 @@ class _SettingPageState extends State<SettingPage> {
                                             context, 'contact_us'),
                                         clickable: false,
                                         onPressed: () {}),
-                                    trailing: Icon(
+                                    trailing: const Icon(
                                       size: 20,
                                       Icons.arrow_forward_ios,
                                       color: Colors.grey,

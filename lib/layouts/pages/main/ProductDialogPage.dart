@@ -147,7 +147,7 @@ class _ProductDialogPageState extends State<ProductDialogPage> {
                       if (i == 0) {
                         MainDialog.showMyDialog(
                             MainDialog(
-                              title: "No available campaigns",
+                              title: getTranslated(context, 'noAvalilable'),
                               text: "",
                               descriptions: "",
                               type: DialogType.INFO,

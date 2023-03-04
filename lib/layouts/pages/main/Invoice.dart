@@ -1,42 +1,18 @@
-import 'package:bsdealz/layouts/dialogs/main_dialog.dart';
-import 'package:bsdealz/layouts/items/buttons/MainButton.dart';
 import 'package:bsdealz/layouts/items/texts/FooterText.dart';
-import 'package:bsdealz/layouts/items/texts/SettingText.dart';
-import 'package:bsdealz/layouts/items/texts/SubTitleText.dart';
-import 'package:bsdealz/layouts/items/tobars/close_bar.dart';
-import 'package:bsdealz/layouts/pages/fragments/MainFragment.dart';
-import 'package:bsdealz/layouts/pages/main/cart_page.dart';
-import 'package:bsdealz/layouts/pages/main/home_page.dart';
-import 'package:bsdealz/network/models/APIAppVariables.dart';
-import 'package:bsdealz/network/models/APICart.dart';
-import 'package:bsdealz/network/models/APICartItem.dart';
-import 'package:bsdealz/network/models/APIOrder.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import 'package:bsdealz/layouts/items/tobars/close_bar.dart';
+
+import 'package:flutter/material.dart';
 import '../../../localization/language_constants.dart';
 import '../../../main.dart';
-import '../../../network/HttpAPI.dart';
-import '../../../network/models/APIUser.dart';
 import '../../../network/models/ApiAddress.dart';
 import '../../../utils/Config.dart';
 import '../../../utils/GetSettingByKey.dart';
 import '../../../utils/inherited/refresh_app_state.dart';
 import '../../../utils/sharedprefs.dart';
-import '../../dialogs/web_dialog.dart';
 import '../../items/buttons/BaseButton.dart';
-import '../../items/buttons/MiniButton.dart';
-import '../../items/icons/AppIcon.dart';
-import '../../items/lists/address_item.dart';
-import '../../items/lists/cart_item.dart';
-import '../../items/textboxes/CustomTextbox.dart';
 import '../../items/texts/BaseText.dart';
 import '../../items/texts/TitleText.dart';
-import '../../items/tobars/back_bar.dart';
-import 'AddAddress.dart';
 
 class InvoicePage extends StatefulWidget {
   static ApiAddress selectedAddress = new ApiAddress();
@@ -82,22 +58,22 @@ class _InvoicePageState extends State<InvoicePage> {
   Widget build(BuildContext context) {
     Widget promoCodeWidget = Container(
       height: 25,
-      margin: EdgeInsets.only(left: 5, right: 5),
+      margin: const EdgeInsets.only(left: 5, right: 5),
       alignment: Alignment.center,
       child: ListTile(
           tileColor: Colors.grey[100],
           title: Container(),
-          trailing: Container(
+          trailing: SizedBox(
               height: 20,
               child: FooterText(
                   text:
-                      "${RefreshApp.of(context)!.OrderDetails!.promoCodeDiscount}",
+                      "${RefreshApp.of(context)!.OrderDetails.promoCodeDiscount}",
                   clickable: false,
                   onPressed: () {})),
           leading: Container(
               height: 20,
               child: FooterText(
-                  text: "Promo code Discount",
+                  text: getTranslated(context, 'promo'),
                   clickable: false,
                   onPressed: () {})),
           onTap: () {
@@ -132,7 +108,7 @@ class _InvoicePageState extends State<InvoicePage> {
                               BaseText(
                                 color: Color(0Xff707070),
                                 text:
-                                    "Order number:${RefreshApp.of(context)!.OrderDetails.id}",
+                                    "${getTranslated(context, 'orderN')}:${RefreshApp.of(context)!.OrderDetails.id}",
                                 margin: 25,
                                 marginh: 25,
                                 fontSize: 11,
@@ -141,9 +117,9 @@ class _InvoicePageState extends State<InvoicePage> {
                                 clickable: false,
                               ),
                               BaseText(
-                                color: Color(0Xff707070),
+                                color: const Color(0Xff707070),
                                 text:
-                                    "   purchased on:${RefreshApp.of(context)!.OrderDetails.createdAt}",
+                                    "${getTranslated(context, 'purchased')}:${RefreshApp.of(context)!.OrderDetails.createdAt}",
                                 margin: 25,
                                 marginh: 10,
                                 fontSize: 11,
@@ -155,9 +131,9 @@ class _InvoicePageState extends State<InvoicePage> {
                           ),
                           Container(
                               alignment: Alignment.center,
-                              margin: EdgeInsets.only(top: 10, bottom: 5),
+                              margin: const EdgeInsets.only(top: 10, bottom: 5),
                               child: BaseText(
-                                color: Color(0Xff707070),
+                                color: const Color(0Xff707070),
                                 text: getTranslated(context, 'invoice'),
                                 margin: 25,
                                 marginh: 25,
@@ -169,7 +145,7 @@ class _InvoicePageState extends State<InvoicePage> {
 
                           Container(
                             alignment: Alignment.center,
-                            margin: EdgeInsets.only(
+                            margin: const EdgeInsets.only(
                                 top: 0, bottom: 5, right: 10, left: 10),
                             height: 1,
                             color: Colors.grey[300],
@@ -183,7 +159,7 @@ class _InvoicePageState extends State<InvoicePage> {
                               itemBuilder: (context, index) {
                                 return Container(
                                     height: 30,
-                                    margin: EdgeInsets.only(
+                                    margin: const EdgeInsets.only(
                                         left: 10, right: 10, bottom: 10),
                                     alignment: Alignment.center,
                                     child: Row(
@@ -252,13 +228,14 @@ class _InvoicePageState extends State<InvoicePage> {
                                     height: 30,
                                     child: FooterText(
                                         text:
-                                            "${RefreshApp.of(context)!.OrderDetails!.subtotal}",
+                                            "${RefreshApp.of(context)!.OrderDetails.subtotal}",
                                         clickable: false,
                                         onPressed: () {})),
                                 leading: Container(
                                     height: 30,
                                     child: FooterText(
-                                        text: "SubTotal",
+                                        text:
+                                            getTranslated(context, 'subtotal'),
                                         clickable: false,
                                         onPressed: () {})),
                                 onTap: () {
@@ -288,7 +265,8 @@ class _InvoicePageState extends State<InvoicePage> {
                                 leading: Container(
                                     height: 20,
                                     child: FooterText(
-                                        text: "Shipping fees",
+                                        text:
+                                            getTranslated(context, 'shipping'),
                                         clickable: false,
                                         onPressed: () {})),
                                 onTap: () {
@@ -320,7 +298,7 @@ class _InvoicePageState extends State<InvoicePage> {
                             children: [
                               Container(
                                 height: 20,
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                     left: 5, right: 5, bottom: 20),
                                 alignment: Alignment.topCenter,
                                 child: ListTile(
@@ -330,13 +308,14 @@ class _InvoicePageState extends State<InvoicePage> {
                                         height: 20,
                                         child: FooterText(
                                             text:
-                                                "${RefreshApp.of(context)!.OrderDetails!.total}",
+                                                "${RefreshApp.of(context)!.OrderDetails.total}",
                                             clickable: false,
                                             onPressed: () {})),
                                     leading: Container(
                                         height: 20,
                                         child: FooterText(
-                                            text: "Total Amount",
+                                            text:
+                                                getTranslated(context, 'total'),
                                             clickable: false,
                                             onPressed: () {})),
                                     onTap: () {}),

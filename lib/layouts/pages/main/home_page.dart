@@ -5,6 +5,7 @@ import 'package:bsdealz/layouts/items/layouts/web/web_home_header.dart';
 
 import 'package:bsdealz/layouts/pages/fragments/MainFragment.dart';
 import 'package:bsdealz/layouts/pages/fragments/MyCouponsFragment.dart';
+import 'package:bsdealz/localization/language_constants.dart';
 import 'package:bsdealz/network/HttpAPI.dart';
 import 'package:bsdealz/network/models/APIUser.dart';
 import 'package:bsdealz/utils/inherited/refresh_app_state.dart';
@@ -323,7 +324,7 @@ class _HomePageState extends State<HomePage> {
                           color: Theme.of(context).primaryColor)),
                   BottomNavigationBarItem(
                       icon: AppIcon(icon: AppIcon.PRODUCTS_PATH, size: 22),
-                      label: 'Products',
+                      label: getTranslated(context, 'products'),
                       backgroundColor: Colors.white,
                       activeIcon: AppIcon(
                           icon: AppIcon.PRODUCTS_PATH,
@@ -331,7 +332,7 @@ class _HomePageState extends State<HomePage> {
                           color: Theme.of(context).primaryColor)),
                   BottomNavigationBarItem(
                       icon: AppIcon(icon: AppIcon.HOME_PATH, size: 22),
-                      label: 'Home',
+                      label: getTranslated(context, 'home'),
                       backgroundColor: Colors.white,
                       activeIcon: AppIcon(
                           icon: AppIcon.HOME_PATH,
@@ -339,7 +340,7 @@ class _HomePageState extends State<HomePage> {
                           color: Theme.of(context).primaryColor)),
                   BottomNavigationBarItem(
                       icon: couponsIcon,
-                      label: 'Coupons',
+                      label: getTranslated(context, 'coupond'),
                       backgroundColor: Colors.white,
                       activeIcon: AppIcon(
                           icon: AppIcon.COUPON_PATH,
@@ -347,7 +348,7 @@ class _HomePageState extends State<HomePage> {
                           color: Theme.of(context).primaryColor)),
                   BottomNavigationBarItem(
                       icon: notificationsIcon,
-                      label: 'Notifications',
+                      label: getTranslated(context, 'notification'),
                       backgroundColor: Colors.white,
                       activeIcon: AppIcon(
                           icon: AppIcon.NOTIFICATION_PATH,

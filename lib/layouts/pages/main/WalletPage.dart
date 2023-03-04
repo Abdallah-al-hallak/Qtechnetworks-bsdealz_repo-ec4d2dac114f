@@ -1,35 +1,10 @@
-import 'dart:async';
-import 'dart:developer';
 import 'package:bsdealz/layouts/items/buttons/MainButton.dart';
-
-import 'package:bsdealz/layouts/items/textboxes/BaseEditText.dart';
-import 'package:bsdealz/layouts/items/textboxes/CustomTextbox.dart';
-import 'package:bsdealz/layouts/items/textboxes/TextboxEmail.dart';
-import 'package:bsdealz/layouts/items/textboxes/TextboxPassword.dart';
-import 'package:bsdealz/layouts/items/textboxes/TextboxPhone.dart';
-import 'package:bsdealz/layouts/items/texts/FooterText.dart';
-import 'package:bsdealz/layouts/items/texts/SubTitleText.dart';
-import 'package:bsdealz/layouts/pages/credentials/login.dart';
 import 'package:bsdealz/localization/language_constants.dart';
-import 'package:bsdealz/network/HttpAPI.dart';
-import 'package:bsdealz/network/models/APIUser.dart';
 import 'package:bsdealz/utils/inherited/refresh_app_state.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-import 'package:url_launcher/url_launcher.dart';
-
-import '../../../main.dart';
-import '../../../network/models/ApiAddress.dart';
-import '../../dialogs/main_dialog.dart';
-import '../../forms/Validator.dart';
 import '../../items/texts/BaseText.dart';
 import '../../items/tobars/back_bar.dart';
-import 'CheckoutPage.dart';
 
 class WalletPage extends StatefulWidget {
   @override
@@ -76,7 +51,7 @@ class PerasonalDetailsForm extends StatefulWidget {
 class PerasonalDetailsFormState extends State<PerasonalDetailsForm> {
   final _formKey = GlobalKey<FormState>();
 
-  ShapeBorder shapeBorder1 = RoundedRectangleBorder(
+  ShapeBorder shapeBorder1 = const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(10)),
       side: BorderSide(width: 1, color: Colors.grey));
   @override
@@ -93,13 +68,14 @@ class PerasonalDetailsFormState extends State<PerasonalDetailsForm> {
         key: _formKey,
         child: ListView(children: <Widget>[
           Container(
-            margin: EdgeInsets.only(top: 10, bottom: 200, left: 20, right: 20),
+            margin: const EdgeInsets.only(
+                top: 10, bottom: 200, left: 20, right: 20),
             child: Card(
               elevation: 0,
               color: Colors.transparent,
               shape: shapeBorder1,
               child: Container(
-                margin: EdgeInsets.all(10),
+                margin: const EdgeInsets.all(10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -107,7 +83,7 @@ class PerasonalDetailsFormState extends State<PerasonalDetailsForm> {
                     Expanded(
                       child: BaseText(
                         color: Colors.grey,
-                        text: "Available Credit",
+                        text: getTranslated(context, 'availableCredit'),
                         margin: 5,
                         marginh: 25,
                         fontSize: 12,
@@ -133,7 +109,7 @@ class PerasonalDetailsFormState extends State<PerasonalDetailsForm> {
             ),
           ),
           MainButton(
-            text: "Recharge",
+            text: getTranslated(context, 'Recharge'),
             onPressed: () async {},
             isActive: true,
           ),

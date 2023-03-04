@@ -128,10 +128,10 @@ class PerasonalDetailsFormState extends State<PerasonalDetailsForm> {
             child: Container(
               child: ListTile(
                   title: SettingText(
-                      text: "Terms and conditions",
+                      text: getTranslated(context, 'Terms'),
                       clickable: false,
                       onPressed: () {}),
-                  trailing: Icon(
+                  trailing: const Icon(
                     size: 20,
                     Icons.arrow_forward_ios,
                     color: Colors.grey,
@@ -182,7 +182,7 @@ class PerasonalDetailsFormState extends State<PerasonalDetailsForm> {
                       WebDialog.showMyDialog(
                           WebDialog(
                             title: "",
-                            text: "Dismiss",
+                            text: getTranslated(context, 'Dis'),
                             descriptions: "",
                             customWidget: ContentWebView(
                                 url: "https://docs.google.com/viewer?url=" +
@@ -220,14 +220,14 @@ class PerasonalDetailsFormState extends State<PerasonalDetailsForm> {
                     _launchURL("https://instagram.com", "INSTAGRAM_PATH link");
                   },
                   child: Container(
-                      margin: EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(10),
                       child: AppIcon(icon: AppIcon.INSTAGRAM_PATH, size: 55))),
               InkWell(
                   onTap: () {
                     _launchURL("https://facebook.com", "FACEBOOK_PATH link");
                   },
                   child: Container(
-                      margin: EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(10),
                       child: AppIcon(icon: AppIcon.FACEBOOK_PATH, size: 55))),
               InkWell(
                   onTap: () {
@@ -235,7 +235,7 @@ class PerasonalDetailsFormState extends State<PerasonalDetailsForm> {
                         "mailto://aaaa@qtechnetworks.com", "EMAIL_PATH link");
                   },
                   child: Container(
-                      margin: EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(10),
                       child: AppIcon(icon: AppIcon.EMAIL_PATH, size: 55))),
               InkWell(
                   onTap: () {

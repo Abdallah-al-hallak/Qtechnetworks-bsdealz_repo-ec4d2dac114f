@@ -42,7 +42,7 @@ class BaseButton extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     BoxDecoration cDecoration;
     ShapeBorder shapeBorder1 = RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(19.0)),
+      borderRadius: const BorderRadius.all(Radius.circular(19.0)),
       side: BorderSide(width: 0.0, color: Colors.grey[700]!),
     );
     Color s = startColor;
@@ -51,7 +51,7 @@ class BaseButton extends StatelessWidget implements PreferredSizeWidget {
     if (!isActive) {
       s = iconColor;
       e = iconColor;
-      tcolor = Color(0XFF313131);
+      tcolor = const Color(0XFF313131);
     } else {
       s = startColor;
       e = endColor;
@@ -64,7 +64,7 @@ class BaseButton extends StatelessWidget implements PreferredSizeWidget {
         child: MaterialButton(
           onPressed: onPressed,
           // shape: shapeBorder1,
-          padding: EdgeInsets.only(bottom: 3.0),
+          padding: const EdgeInsets.only(bottom: 3.0),
           child: Ink(
             decoration: BoxDecoration(
               gradient: LinearGradient(

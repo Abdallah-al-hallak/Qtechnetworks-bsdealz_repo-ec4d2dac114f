@@ -646,6 +646,7 @@ class CartItemSingleState extends State<CartItemSingle> {
       if (value.data['status'] == 'success') {
         ApiCart cart = ApiCart.fromJson(value.data['data']);
         // applyPromoCode();
+        // TODO Check backend
         RefreshApp.of(context)!.apiAppVariables.cart = cart;
         MyApp.refreshApp(context);
       }

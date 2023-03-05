@@ -290,6 +290,9 @@ class SignupForm1State extends State<SignupForm1> {
           message =
               (message! + "\n" + value.data['errors']['confirm_password'][0]);
         }
+        if (value.data['errors']['phone'] != null) {
+          message = (message! + "\n" + value.data['errors']['phone'][0]);
+        }
         MainDialog.showMyDialog(
             MainDialog(
                 title: "Register Error",

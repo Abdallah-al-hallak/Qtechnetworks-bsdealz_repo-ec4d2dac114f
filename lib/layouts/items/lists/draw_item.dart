@@ -49,7 +49,7 @@ class _DrawItemState extends State<DrawItem> {
         child: DrawItemSingle(
           height: widget.height,
           width: widget.width,
-          text: widget.drawItem!.campaign?.name.toString() ?? '',
+          text: widget.drawItem?.campaign?.name.toString() ?? '',
           drawItem: widget.drawItem!,
         ));
   }

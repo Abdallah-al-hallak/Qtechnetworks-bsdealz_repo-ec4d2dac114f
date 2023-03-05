@@ -578,21 +578,21 @@ class _CartPageState extends State<CartPage> {
                               ),
                               Container(
                                 height: 20,
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                     left: 5, right: 5, bottom: 20),
                                 alignment: Alignment.topCenter,
                                 child: ListTile(
                                     tileColor: Colors.grey[100],
                                     title: Container(),
-                                    trailing: Container(
+                                    trailing: SizedBox(
                                         height: 20,
                                         child: FooterText(
                                             text:
-                                                "${RefreshApp.of(context)!.apiAppVariables.cart!.total}",
+                                                "${RefreshApp.of(context)!.apiAppVariables.cart?.subtotal}",
                                             clickable: false,
                                             onPressed:
                                                 () {})), // ${RefreshApp.of(context)!.apiHeaders.acceptCurrency}${RefreshApp.of(context)!.CartTotal} ${RefreshApp.of(context)!.apiAppVariables.cart!.total}
-                                    leading: Container(
+                                    leading: SizedBox(
                                         height: 20,
                                         child: FooterText(
                                             text:
@@ -604,7 +604,7 @@ class _CartPageState extends State<CartPage> {
                             ],
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 20),
+                            margin: const EdgeInsets.only(top: 20),
                             child: BaseButton(
                               isfilled: true,
                               isActive: true,
@@ -629,7 +629,7 @@ class _CartPageState extends State<CartPage> {
                                   WebDialog.showMyDialog(
                                       WebDialog(
                                         title: "",
-                                        text: "Dismiss",
+                                        text: getTranslated(context, 'Dis'),
                                         descriptions: "",
                                         customWidget: CheckoutPage(),
                                       ),

@@ -75,7 +75,7 @@ class _ProductItemState extends State<ProductItem> {
               if (i == 0) {
                 MainDialog.showMyDialog(
                     MainDialog(
-                      title: "No available campaigns",
+                      title: getTranslated(context, 'noAvalilable'),
                       text: "",
                       descriptions: "",
                       type: DialogType.INFO,
@@ -105,7 +105,7 @@ class _ProductItemState extends State<ProductItem> {
             if (i == 0) {
               MainDialog.showMyDialog(
                   MainDialog(
-                    title: "No available campaigns",
+                    title: getTranslated(context, 'noAvalilable'),
                     text: "",
                     descriptions: "",
                     type: DialogType.INFO,
@@ -142,7 +142,7 @@ class _ProductItemState extends State<ProductItem> {
                         if (i == 0) {
                           MainDialog.showMyDialog(
                               MainDialog(
-                                title: "No available campaigns",
+                                title: getTranslated(context, 'noAvalilable'),
                                 text: "",
                                 descriptions: "",
                                 type: DialogType.INFO,
@@ -225,13 +225,13 @@ class ProductItemSingleState extends State<ProductItemSingle> {
     return Container(
       height: 90,
       alignment: Alignment.topCenter,
-      margin: EdgeInsets.all(5),
+      margin: const EdgeInsets.all(5),
       child: Column(
         children: [
           Container(
             height: 80,
             alignment: Alignment.center,
-            margin: EdgeInsets.only(bottom: 5),
+            margin: const EdgeInsets.only(bottom: 5),
             child: PhysicalModel(
               // elevation: 4.0,
               color: Colors.transparent,

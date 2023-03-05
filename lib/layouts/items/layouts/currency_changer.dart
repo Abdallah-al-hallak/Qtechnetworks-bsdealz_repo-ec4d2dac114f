@@ -10,10 +10,9 @@ import 'package:flutter/material.dart';
 import '../../../main.dart';
 import '../../../utils/sharedprefs.dart';
 
-
 class CurrencyChanger extends StatefulWidget {
- final  double height;
-  CurrencyChanger({Key? key,required this.height}) : super(key: key);
+  final double height;
+  CurrencyChanger({Key? key, required this.height}) : super(key: key);
 
   @override
   _CurrencyChangerState createState() => _CurrencyChangerState();
@@ -21,7 +20,7 @@ class CurrencyChanger extends StatefulWidget {
 
 class _CurrencyChangerState extends State<CurrencyChanger> {
   void _changeCurrency(Currency currency) async {
-   // Locale _locale = await setLocale(language!.languageCode);
+    // Locale _locale = await setLocale(language!.languageCode);
     MyApp.setCurrency(context, currency);
   }
 
@@ -29,47 +28,60 @@ class _CurrencyChangerState extends State<CurrencyChanger> {
   Widget build(BuildContext context) {
     return InkWell(
       hoverColor: Colors.transparent,
-      focusColor:Colors.transparent,
-      onTap: (){
+      focusColor: Colors.transparent,
+      onTap: () {
         showCurrencyPicker(
           context: context,
           showSearchField: true,
           showCurrencyName: true,
           showCurrencyCode: true,
           onSelect: (Currency currency) {
-            RefreshApp.of(context)!.currency=currency;
-            RefreshApp.of(context)!.apiHeaders.acceptCurrency=currency.code;
-            CustomSharedPrefs().setVJson("APIHeaders",    RefreshApp.of(context)!.apiHeaders.toJson()).then((value) {
+            RefreshApp.of(context)!.currency = currency;
+            RefreshApp.of(context)!.apiHeaders.acceptCurrency = currency.code;
+            CustomSharedPrefs()
+                .setVJson(
+                    "APIHeaders", RefreshApp.of(context)!.apiHeaders.toJson())
+                .then((value) {
               CustomSharedPrefs().setV("currency", currency.code).then((value) {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => Splash()));
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Splash()));
               });
-
             });
             print('Select currency: ${currency.name}');
           },
           theme: CurrencyPickerThemeData(
             flagSize: 25,
-            titleTextStyle: TextStyle(fontSize: 17),
-            subtitleTextStyle: TextStyle(fontSize: 15, color: Theme.of(context).hintColor),
+            titleTextStyle: const TextStyle(fontSize: 17),
+            subtitleTextStyle:
+                TextStyle(fontSize: 15, color: Theme.of(context).hintColor),
             bottomSheetHeight: MediaQuery.of(context).size.height / 2,
-
           ),
-          currencyFilter: <String>[ 'IQD','AED', 'USD',],
+          currencyFilter: <String>[
+            'IQD',
+            'AED',
+            'USD',
+          ],
         );
       },
       child: Container(
-        height:widget.height,
+        height: widget.height,
         alignment: Alignment.center,
         child: Row(
           children: [
-            SubTitleText(text: RefreshApp.of(context)!.currency.code.toString()==null?"Select Currency":RefreshApp.of(context)!.currency.code.toString(),onPressed: (){
-
-            }, clickable: false,),
-        Icon(Icons.keyboard_arrow_down,size: 24,)  ],
+            SubTitleText(
+              text: RefreshApp.of(context)!.currency.code.toString() == null
+                  ? "Select Currency"
+                  : RefreshApp.of(context)!.currency.code.toString(),
+              onPressed: () {},
+              clickable: false,
+            ),
+            const Icon(
+              Icons.keyboard_arrow_down,
+              size: 24,
+            )
+          ],
         ),
       ),
     );
-
   }
 }

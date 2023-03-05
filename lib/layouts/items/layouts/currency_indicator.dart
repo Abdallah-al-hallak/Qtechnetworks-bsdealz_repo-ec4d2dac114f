@@ -6,14 +6,10 @@ import 'package:bsdealz/utils/inherited/refresh_app_state.dart';
 import 'package:bsdealz/utils/sharedprefs.dart';
 import 'package:flutter/material.dart';
 
-
-
 class CurrencyIndicator extends StatefulWidget implements PreferredSizeWidget {
   final double height;
 
-
-  const CurrencyIndicator({Key? key, required this.height})
-      : super(key: key);
+  const CurrencyIndicator({Key? key, required this.height}) : super(key: key);
 
   @override
   _CurrencyIndicatorState createState() => _CurrencyIndicatorState();
@@ -24,8 +20,6 @@ class CurrencyIndicator extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _CurrencyIndicatorState extends State<CurrencyIndicator> {
-
-
   _CurrencyIndicatorState();
 
   @override
@@ -33,14 +27,10 @@ class _CurrencyIndicatorState extends State<CurrencyIndicator> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return ShortcutsItem(
-        height: widget.height
-    );
+    return ShortcutsItem(height: widget.height);
   }
 }
 
@@ -48,9 +38,7 @@ class _CurrencyIndicatorState extends State<CurrencyIndicator> {
 class ShortcutsItem extends StatefulWidget {
   final double height;
 
-
-  const ShortcutsItem({Key ?key, required this.height})
-      : super(key: key);
+  const ShortcutsItem({Key? key, required this.height}) : super(key: key);
 
   @override
   ShortcutsItemState createState() {
@@ -68,35 +56,37 @@ class ShortcutsItemState extends State<ShortcutsItem> {
   // not a GlobalKey<MyCustomBannerForm1State>.
   final _formKey = GlobalKey<FormState>();
   final controller = PageController(initialPage: 0);
-  String selectedCurrency=  'USD';
+  String selectedCurrency = 'USD';
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getCurrency();
   }
+
   void getCurrency() async {
-    selectedCurrency=  RefreshApp.of(context)!.apiHeaders!.acceptCurrency.toString();
-    print("acceptCurrency-----"+selectedCurrency);
+    selectedCurrency =
+        RefreshApp.of(context)!.apiHeaders.acceptCurrency.toString();
+    print("acceptCurrency-----" + selectedCurrency);
     await CustomSharedPrefs().getV("currency").then((value) {
-      if(value!=null&&value!=''){
-        switch(value){
+      if (value != null && value != '') {
+        switch (value) {
           case 'USD':
             setState(() {
-              selectedCurrency='USD';
+              selectedCurrency = 'USD';
             });
 
             break;
           case 'AED':
             setState(() {
-              selectedCurrency='AED';
+              selectedCurrency = 'AED';
             });
 
             break;
 
           case 'IQD':
             setState(() {
-              selectedCurrency='IQD';
+              selectedCurrency = 'IQD';
             });
             break;
           // case 'JOD':
@@ -105,10 +95,10 @@ class ShortcutsItemState extends State<ShortcutsItem> {
           //   });
           //   break;
         }
-
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     double radius = 7;
@@ -117,7 +107,8 @@ class ShortcutsItemState extends State<ShortcutsItem> {
     return Container(
       margin: EdgeInsets.only(),
       height: widget.height,
-      child: Container(height: widget.height,
+      child: Container(
+          height: widget.height,
           alignment: Alignment.center,
           child: DropdownButton<Currency>(
             iconSize: 15,
@@ -126,59 +117,60 @@ class ShortcutsItemState extends State<ShortcutsItem> {
             hint: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-              //  AppIcon(icon:AppIcon.GLOBE_PATH,size: 20, ),
-                BaseText
-                  (
+                //  AppIcon(icon:AppIcon.GLOBE_PATH,size: 20, ),
+                BaseText(
                   color: Theme.of(context).primaryColor,
                   margin: 0,
                   marginh: 5,
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
-                  text: selectedCurrency,clickable: false,onPressed:(){},)
-
+                  text: selectedCurrency,
+                  clickable: false,
+                  onPressed: () {},
+                )
               ],
             ),
             onChanged: (Currency? currency) {
               _changeCurrency(currency);
-              selectedCurrency=currency!.code.toString();
+              selectedCurrency = currency!.code.toString();
               //Navigator.of(context).pop();
             },
             items: Currency.currencyList()
                 .map<DropdownMenuItem<Currency>>(
                   (e) => DropdownMenuItem<Currency>(
-                value: e,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                 //   AppIcon(icon:AppIcon.GLOBE_PATH,size: 20, ),
-                    BaseText
-                      (
-                      color: Theme.of(context).primaryColor,
-                      margin: 0,
-                      marginh: 0,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      text: e.code,clickable: false,onPressed:(){},)
-
-                  ],
-                ),
-              ),
-            )
+                    value: e,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        //   AppIcon(icon:AppIcon.GLOBE_PATH,size: 20, ),
+                        BaseText(
+                          color: Theme.of(context).primaryColor,
+                          margin: 0,
+                          marginh: 0,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          text: e.code,
+                          clickable: false,
+                          onPressed: () {},
+                        )
+                      ],
+                    ),
+                  ),
+                )
                 .toList(),
           )),
-
     );
-
   }
-  void _changeCurrency(Currency? currency) async {
-    RefreshApp.of(context)!.apiHeaders.acceptCurrency=currency!.code;
-    CustomSharedPrefs().setVJson("APIHeaders",    RefreshApp.of(context)!.apiHeaders.toJson()).then((value) {
-      CustomSharedPrefs().setV("currency", currency.code).then((value) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => Splash()));
-      });
 
+  void _changeCurrency(Currency? currency) async {
+    RefreshApp.of(context)!.apiHeaders.acceptCurrency = currency!.code;
+    CustomSharedPrefs()
+        .setVJson("APIHeaders", RefreshApp.of(context)!.apiHeaders.toJson())
+        .then((value) {
+      CustomSharedPrefs().setV("currency", currency.code).then((value) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Splash()));
+      });
     });
   }
-
 }

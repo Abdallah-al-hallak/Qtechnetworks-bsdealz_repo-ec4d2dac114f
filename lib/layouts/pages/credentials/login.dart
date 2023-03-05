@@ -327,13 +327,13 @@ class LoginForm1State extends State<LoginForm1> {
           EasyLoading.dismiss();
           MainDialog.showMyDialog(
               MainDialog(
-                title: "${AppSettingTheme.getTheme(
+                title: AppSettingTheme.getTheme(
                   context,
                   Config.FAILED_KEY,
                   Config.FAILED_VALUE,
-                )}",
-                text: "${value.data['message'].toString()}",
-                descriptions: "${value.data['message'].toString()}",
+                ),
+                text: value.data['message'].toString(),
+                descriptions: value.data['message'].toString(),
                 type: DialogType.INFO,
                 customWidget: Container(),
               ),
@@ -367,11 +367,11 @@ class LoginForm1State extends State<LoginForm1> {
           MainDialog.showMyDialog(
               MainDialog(
                 title: currentEdittext.text.toString(),
-                text: "${AppSettingTheme.getTheme(
+                text: AppSettingTheme.getTheme(
                   context,
                   Config.DISMISS_KEY,
                   Config.DISMISS_VALUE,
-                )}",
+                ),
                 descriptions: v,
                 type: DialogType.ERROR,
                 customWidget: Container(),

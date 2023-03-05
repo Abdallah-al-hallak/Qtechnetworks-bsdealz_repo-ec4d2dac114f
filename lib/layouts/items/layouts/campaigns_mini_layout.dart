@@ -1,17 +1,11 @@
 import 'package:bsdealz/layouts/items/layouts/blinking_progress_indicator.dart';
 import 'package:bsdealz/layouts/items/texts/BaseText.dart';
-import 'package:bsdealz/layouts/items/texts/FooterText.dart';
 import 'package:bsdealz/layouts/items/texts/TitleText.dart';
 import 'package:bsdealz/localization/language_constants.dart';
-
 import 'package:bsdealz/network/HttpAPI.dart';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import 'package:url_launcher/url_launcher.dart';
-
 import '../../../network/models/APICampaign.dart';
 import '../../../utils/Config.dart';
 import '../../../utils/GetSettingByKey.dart';
@@ -159,7 +153,7 @@ class CustomCampaignItemState extends State<CustomCampaignItem> {
                 ),
                 descriptions: "",
                 customWidget: CampaignPage(
-                  campaign: campaign!,
+                  campaign: campaign,
                 ),
               ),
               context);
@@ -168,7 +162,7 @@ class CustomCampaignItemState extends State<CustomCampaignItem> {
               context,
               MaterialPageRoute(
                   builder: (context) => CampaignPage(
-                        campaign: campaign!,
+                        campaign: campaign,
                       )));
         }
       },
@@ -180,8 +174,8 @@ class CustomCampaignItemState extends State<CustomCampaignItem> {
         child: Container(
           width: width - 10,
           height: width - 10,
-          margin: EdgeInsets.all(2),
-          padding: EdgeInsets.all(5),
+          margin: const EdgeInsets.all(2),
+          padding: const EdgeInsets.all(5),
           child: Column(
             children: [
               Flexible(
@@ -189,7 +183,7 @@ class CustomCampaignItemState extends State<CustomCampaignItem> {
                   children: [
                     Container(
                       alignment: Alignment.center,
-                      margin: EdgeInsets.only(bottom: 10),
+                      margin: const EdgeInsets.only(bottom: 10),
                       child: PhysicalModel(
                         //elevation: 4.0,
                         color: Colors.transparent,
@@ -197,7 +191,7 @@ class CustomCampaignItemState extends State<CustomCampaignItem> {
                         // shadowColor: Colors.black,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(radius),
-                          child: Container(
+                          child: SizedBox(
                             height: 75,
                             child: Image(
                               image: CachedNetworkImageProvider(

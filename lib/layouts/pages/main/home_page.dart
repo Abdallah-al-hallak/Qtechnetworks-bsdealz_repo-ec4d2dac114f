@@ -340,7 +340,7 @@ class _HomePageState extends State<HomePage> {
                           color: Theme.of(context).primaryColor)),
                   BottomNavigationBarItem(
                       icon: couponsIcon,
-                      label: getTranslated(context, 'coupond'),
+                      label: getTranslated(context, 'coupons'),
                       backgroundColor: Colors.white,
                       activeIcon: AppIcon(
                           icon: AppIcon.COUPON_PATH,

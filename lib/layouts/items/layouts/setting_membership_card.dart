@@ -27,7 +27,7 @@ class SettingMembershipCard extends StatefulWidget
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(height!);
+  Size get preferredSize => Size.fromHeight(height);
 }
 
 class _SettingMembershipCardState extends State<SettingMembershipCard> {
